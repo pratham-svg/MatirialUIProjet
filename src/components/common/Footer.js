@@ -4,42 +4,52 @@ import logo from '../../assets/logo.png'
 const Footer = () => {
   return (
     <div>
-    <footer class="container-fluid footer_section p-0">
-    <div class="container">
-        <div class="row pt-5 pb-1">
-            <div class="col-md-6 mb-4">
-                <div class="footer_left_area">
-                    <img src={logo} class="footer_logo" alt=""/>
-                    <p class="my-4">On the other hand, we denounce with righteous indignation and dislike men who
+    <footer className="container-fluid footer_section p-0">
+    <div className="container">
+        <div className="row pt-5 pb-1">
+            <div className="col-md-6 mb-4">
+                <div className="footer_left_area">
+                    <img src={logo} className="footer_logo" alt=""/>
+                    <p className="my-4">On the other hand, we denounce with righteous indignation and dislike men who
                         are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by
                         desire, that they cannot foresee the pain and.</p>
-                    <div class="footer_socail_area">
-                        <i class="fa-brands fa-twitter"></i>
-                        <i class="fa-brands fa-facebook-f"></i>
-                        <i class="fa-brands fa-linkedin-in"></i>
+                    <div className="footer_socail_area">
+                        <i className="fa-brands fa-twitter"></i>
+                        <i className="fa-brands fa-facebook-f"></i>
+                        <i className="fa-brands fa-linkedin-in"></i>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 mb-4">
-                <div class="footer_right_area">
+            <div className="col-md-6 mb-4">
+                <div className="footer_right_area">
                     <h2>Contact Info</h2>
-                    <p class="my-3">On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment.</p>
-                    <div class="contact_info">
-                        <div> <i class="fa-solid fa-envelope"></i> mechanicalcalculator@gmail.com </div>
-                        <div> <i class="fa-solid fa-phone"></i> 012-924-533 </div>
-                        <div> <i class="fa-solid fa-location-dot"></i> USA</div>
+                    <p className="my-3">On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment.</p>
+                    <div className="contact_info">
+                        <div> <i className="fa-solid fa-envelope"></i> mechanicalcalculator@gmail.com </div>
+                        <div> <i className="fa-solid fa-phone"></i> 012-924-533 </div>
+                        <div> <i className="fa-solid fa-location-dot"></i> USA</div>
                     </div>
                 </div>
             </div>
         </div>
         
     </div>
-    <div class="row footer_copy_right_section">
+    <div className="row footer_copy_right_section">
         <p>
             Copyright 2023
         </p>
     </div>
 </footer>
+<div className="modal fade" id="watch_video_modal" tabindex="-1" aria-labelledby="watch_video_modalLabel"
+aria-hidden="true">
+<div className="modal-dialog modal-dialog-centered modal-lg">
+    <div className="modal-content">
+        <div className="modal-body">
+            <i className="fa-regular fa-circle-play "></i>
+        </div>
+    </div>
+</div>
+</div>
     </div>
   )
 }
