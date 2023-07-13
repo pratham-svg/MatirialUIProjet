@@ -1,38 +1,913 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+body {
+    font-family: 'Lato', sans-serif;
+    background: #E5F4FF;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+p {
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+button:focus, button:active, button:hover {
+    box-shadow: none !important;
+    border: none !important;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+
+/* Herder section */
+.header_section {
+    background-color: #006BB8F2;
+    position: fixed;
+    top: 0;
+    z-index: 9;
 }
 
-.App-link {
-  color: #61dafb;
+.header_section .navbar-light .navbar-toggler {
+    border: none;
+    color: #fff;
+    font-size: 27px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.header_section .logo_area img {
+    height: 40px;
+}
+
+.header_section .navbar-collapse .navbar-nav .nav-item .nav-link {
+    padding: 20px 15px;
+    margin: 0 5px;
+    color: #D4EDFF;
+    text-align: center;
+}
+
+.header_section .navbar-collapse .navbar-nav .nav-item .nav-link.active {
+    font-weight: 700;
+    color: #fff;
+    border-bottom: 5px solid #fff;
+}
+
+.header_section .navbar-collapse .nav_right_side .btn.btn_signin {
+    background-color: #fff;
+    padding: 4px 15px !important;
+    height: auto;
+    font-weight: 500;
+    border-radius: 7px;
+    color: #006BB8;
+    border: none;
+}
+
+/* Hero Banner */
+.hero_banner_section {
+    margin-top: 68.8px;
+}
+
+.hero_banner_section .hero_banner_img img {
+    width: 100%;
+}
+
+/* why_choose_us_section */
+
+.why_choose_us_section .why_choose_us_item .why_choose_us_item_img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background-color: #fff;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)) drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.07));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+.why_choose_us_section .why_choose_us_item .why_choose_us_item_img img {
+    width: 40px;
+}
+
+.why_choose_us_section .why_choose_us_item .why_choose_us_item_content {
+    text-align: center;
+    width: 80%;
+    text-align: center;
+    margin: auto;
+}
+
+.why_choose_us_section .why_choose_us_item .why_choose_us_item_content h5 {
+    letter-spacing: 1.25px;
+}
+
+
+/* Software_video_section */
+.Software_video_section {
+    background-image: url(../src/assets/Vider_background.png);
+    background-position: center;
+    background-size: cover;
+    padding: 100px 0;
+}
+
+.Software_video_section .Software_video_content h2 {
+    letter-spacing: 2px;
+}
+
+.Software_video_section .Software_video_content .btn.btn_watching_video {
+    background-color: #006BB8;
+    padding: 10px 25px;
+    border-radius: 10px;
+    border: none;
+    font-size: 18px;
+    color: #fff;
+}
+
+/* watch_video_modal */
+#watch_video_modal .modal-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    font-size: 50px;
+}
+
+/* Use_Software_section */
+
+.Use_Software_section .Use_Software_heading h1 {
+    /* font-size: 50px !important; */
+    font-weight: 900;
+    letter-spacing: 3.25px;
+}
+
+.Use_Software_section .Use_Software_steps_area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Use_Software_section .Use_Software_steps_area .Use_Software_step_item {
+    filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.088));
+}
+
+.Use_Software_section .Use_Software_steps_area .Use_Software_step_item .Use_Software_step_number {
+    width: 120px;
+    height: 120px;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 7px solid #E5F4FF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    position: relative;
+    top: 60px;
+}
+
+.Use_Software_section .Use_Software_steps_area .Use_Software_step_item .Use_Software_step_number span {
+    font-size: 60px;
+    font-weight: 800;
+}
+
+.Use_Software_section .Use_Software_steps_area .Use_Software_step_item .Use_Software_step_number small {
+    /* font-size: 18px; */
+    font-weight: 500;
+    margin: 0px 0px 15px 3px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #5C5C5C;
+}
+
+.Use_Software_section .Use_Software_steps_area .Use_Software_step_item .Use_Software_step_content {
+    width: 250px;
+    height: auto;
+    background-color: #fff;
+    padding: 70px 15px 15px;
+    border-radius: 15px;
+    min-height: 200px;
+    text-align: center;
+    font-size: 17px;
+    letter-spacing: 1.1px;
+    color: #252525;
+    line-height: 28px;
+}
+
+.Use_Software_section .Use_Software_steps_area .Use_Software_step_arrow img {
+    height: 40px;
+}
+
+/* Testimonials_section */
+
+.Testimonials_section {
+    background-color: #fff;
+}
+
+.Testimonials_section .Testimonials_section_heading h1 {
+    font-weight: 900;
+    letter-spacing: 3.25px;
+}
+
+/* footer_section */
+.footer_section {
+    background-color: #252525;
+}
+
+.footer_section .footer_left_area .footer_logo {
+    height: 60px;
+}
+
+.footer_section .footer_left_area p {
+    font-weight: 400;
+    line-height: 25px;
+    color: #fff;
+}
+
+.footer_section .footer_left_area .footer_socail_area {
+    display: flex;
+    align-items: center;
+}
+
+.footer_section .footer_left_area .footer_socail_area i {
+    background-color: #fff;
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin: 0px 15px 0 0;
+}
+
+.footer_section .footer_right_area {
+    color: #fff;
+}
+
+.footer_section .footer_right_area h2 {
+    font-weight: bold;
+    letter-spacing: 1.65px;
+    text-transform: capitalize;
+}
+
+.footer_section .footer_right_area .contact_info {
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.footer_section .footer_right_area .contact_info i {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+}
+
+.footer_copy_right_section {
+    background-color: #000;
+    width: 100%;
+    padding: 20px 0;
+    margin: 0;
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+}
+
+/* About Us */
+/* PageTitle_banner_section */
+
+.PageTitle_banner_section {
+    margin-top: 68.8px;
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.25) 100%), url(../src/assets/banner.png);
+    background-size: cover;
+}
+
+.PageTitle_banner_section .PageTitle_banner_heading {
+    font-weight: bolder;
+    text-align: center;
+    padding: 80px 0;
+    color: #fff;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+
+/* about_section */
+.about_section .about_img_area img {
+    width: 100%;
+}
+
+.about_section .about_content_area .about_content_heading_taglin {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #80C9FD;
+    letter-spacing: 1.25px;
+    font-weight: 600;
+}
+
+.about_section .about_content_area .h2 {
+    font-weight: bolder;
+    margin-bottom: 20px;
+    letter-spacing: 2.25px;
+}
+
+.about_section .about_content_area p {
+    color: #444444;
+    /* font-size: 18px; */
+    line-height: 30px;
+}
+
+/* Mission_Vision_section */
+.Mission_Vision_section .Mission_Vision_img img {
+    width: 100%;
+}
+
+.Mission_Vision_section .Mission_Vision_content .Mission_Vision_accordion .accordion-item {
+    background-color: transparent;
+    background: transparent;
+    border: none;
+    margin: 20px 0;
+}
+
+.Mission_Vision_section .Mission_Vision_content .Mission_Vision_accordion .accordion-header .accordion-button {
+    background-color: #fff;
+    border-radius: 50px;
+    font-weight: 700;
+    letter-spacing: 1.25px;
+}
+
+.accordion-button:not(.collapsed) {
+    box-shadow: none !important;
+}
+
+.Mission_Vision_section .Mission_Vision_content .Mission_Vision_accordion .accordion-item .accordion-collapse {
+    background-color: #fff;
+    border-radius: 20px;
+}
+
+.accordion-button::after {
+    background-image: url(../src/assets/addVector.png) !important;
+}
+
+.accordion-button:not(.collapsed)::after {
+    background-image: url(../src/assets/lessVector.png) !important;
+    height: 0.25rem;
+}
+
+/* Contact us */
+.Touch_section .social-media {
+    width: 45px;
+    height: 45px;
+    margin: 0 10px;
+}
+
+.Touch_section .btn_submit {
+    border-radius: 12px;
+    border: 1px solid #FFF;
+    background: #006BB8;
+    color: #FFF;
+    padding: 10px 35px;
+}
+
+.contact_info_section .why_choose_us_item {
+    display: flex;
+    align-items: center;
+}
+
+.contact_info_section .why_choose_us_item .why_choose_us_item_img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: #fff;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)) drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.07));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.contact_info_section .why_choose_us_item .why_choose_us_item_img img {
+    height: 30px;
+
+}
+
+/* Calculator_section */
+.Calculator_section {
+    margin-top: 68.8px;
+    background-image: linear-gradient(135deg, #80C9FD 30.52%, #D8EFFF 51.35%, #80C9FD 70.10%);
+
+
+}
+
+.Calculator_section .Calculator_subProject_List_area .Calculator_subProject_List {
+    width: 100%;
+    height: 400px;
+    overflow-y: scroll;
+    overflow-x: auto;
+    background-color: #fff;
+    box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.25);
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+.Calculator_section .Calculator_subProject_List_area .Calculator_subProject_List::-webkit-scrollbar {
+    width: 5px;
+}
+
+.Calculator_section .Calculator_subProject_List_area .Calculator_subProject_List::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: #D6EEFF;
+}
+
+.Calculator_section .Calculator_subProject_List_area .Calculator_subProject_List::-webkit-scrollbar-thumb {
+    background: #006BB8;
+    border-radius: 10px;
+    width: 3px;
+}
+
+.Calculator_section .Calculator_subProject_List_area .Calculator_subProject_List::-webkit-scrollbar-thumb:hover {
+    background: #eaeaea;
+}
+
+.Calculator_section .Calculator_subProject_List_area .Calculator_subProject_buttonList .subProject_btn {
+    border-radius: 10px;
+    border: 1px solid #FFF;
+    background: #006BB8;
+    color: #FFF;
+    text-align: center;
+    font-weight: 500;
+    text-transform: capitalize;
+    width: 100%;
+    margin: 5px auto;
+    padding: 6px 15px;
+    height: 40px;
+}
+
+.Calculator_section .Calculator_subProject_List_area .Calculator_subProject_buttonList .subProject_btn:hover,
+.Calculator_section .Calculator_subProject_List_area .Calculator_subProject_buttonList .subProject_btn:focus,
+.Calculator_section .Calculator_subProject_List_area .Calculator_subProject_buttonList .subProject_btn:active {
+    background: #00518b;
+    color: #FFF;
+    padding: 6px 15px;
+    margin: 5px auto;
+}
+
+.Calculator_section .Calculator_projectName_area .form-group {
+    display: flex;
+    align-items: center;
+}
+
+.Calculator_section .Calculator_projectName_area .form-group label {
+    width: 40%;
+}
+
+.Calculator_section .Calculator_AirData_area {
+    border-radius: 10px;
+    background: #FFF;
+    box-shadow: 3px 3px 8px 0px rgba(0, 0, 0, 0.148);
+    padding: 20px;
+    text-align: center;
+}
+
+.Calculator_section .Calculator_AirData_area .Calculator_AirData_heading {
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: start;
+}
+
+.Calculator_section .Calculator_AirData_area .form-group {
+    text-align: start;
+}
+
+.Calculator_section .Calculator_AirData_area .form-group label {
+    font-size: 14px;
+    color: #555;
+    text-transform: capitalize;
+}
+
+.Calculator_section .Calculator_AirData_area .btn_lock_Duct {
+    border-radius: 4px;
+    background: #006BB8;
+    color: #fff;
+    height: 40px;
+    text-align: center;
+}
+
+.Calculator_section .Calculator_AirData_area .Possible_sizing_heading {
+    display: flex;
+}
+
+.Calculator_section .Calculator_AirData_area .Possible_sizing_heading div {
+    width: 33.33333%;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: start;
+}
+
+.Calculator_section .Calculator_AirData_area .Possible_sizing_heading div:nth-child(2) {
+    text-align: center;
+}
+
+.Calculator_section .Calculator_AirData_area .Possible_sizing_data {
+    display: flex;
+    align-items: center;
+}
+
+.Calculator_section .Calculator_AirData_area .Possible_sizing_data div {
+    width: 33.33333%;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: start;
+}
+
+.Calculator_section .Calculator_AirData_area .Possible_sizing_data div:nth-child(2) {
+    text-align: center;
+}
+
+.btn_viewDuct {
+    width: 100%;
+    height: 45px;
+    border-radius: 12px;
+    border: 1px solid #FFF;
+    background: #006BB8;
+    color: #fff;
+    margin-top: 15px;
+    text-transform: capitalize;
+}
+
+/* SignIN */
+.Sign-section {
+    margin-top: 68.8px;
+}
+
+.Sign-section .Sign-Up-card-section {
+    border-radius: 10px;
+    padding: 15px;
+    border: 0;
+    height: 100%;
+}
+
+.Sign-section .Sign-Up-card-section .Sign_Up_subheading {
+    color: #A9A9A9;
+    font-family: Lato;
+    font-size: 16px;
+    font-style: normal;
+
+}
+
+.Sign-section .Sign-Up-card-section .form-label {
+    color: #555555;
+    font-weight: 400;
+    margin-bottom: 3px;
+}
+
+.Sign-section .Sign-Up-card-section .Sign_btn_submit {
+    border-radius: 12px;
+    background: #006BB8;
+    color: #fff;
+    padding: 10px 40px;
+    border: 0;
+}
+
+.Sign-section .Sign-Up-card-section .Sign_btn_submit :hover {
+    border-radius: 12px;
+    background: #006BB8;
+    color: #fff;
+    padding: 10px 40px;
+    border: 0;
+}
+
+.Sign-section .Sign-Up-card-section .form-check-input {
+    border-radius: 3px;
+    border: 1px solid #006BB8;
+
+}
+
+.Sign-section .Sign-Up-card-section .form-check-label {
+    color: #555555;
+
+}
+
+.Sign-Up-card-section-img {
+    border-radius: 10px;
+    padding: 75px 15px;
+    border: 0;
+    height: 100%;
+}
+
+.Sign-section .nav-pills-bg {
+    background: #fff;
+    border-radius: 100px;
+    padding: 5px;
+    width: fit-content;
+    justify-content: space-around;
+    margin: auto;
+}
+
+.Sign-section .nav-pills .nav-link.active {
+    background-color: #7FCAFF;
+    border-radius: 100px;
+    color: #000;
+    font-weight: 700;
+}
+
+.Sign-section .nav-pills .nav-link {
+    padding: 10px 40px;
+    color: #5F5F5F;
+    font-weight: 400;
+}
+
+.forget_password {
+    color: #7D7D7D;
+    text-decoration: none;
+    font-weight: 400;
+}
+
+/* Project List */
+.Project-section {
+    margin-top: 68.8px;
+}
+
+.Project-section .btn-New-project {
+    border-radius: 12px;
+    border: 0px;
+    background: #FFF;
+    color: #006BB8;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.Project-section .table {
+    font-size: 20px;
+    margin: 0;
+}
+
+.Project-section .table .table-header {
+    background-color: #7FCAFF;
+}
+
+.table-action-icon a {
+    color: #545454;
+    margin: 0 10px;
+}
+
+/* Pricing */
+.Pricing-select {
+    margin-top: 63px;
+}
+
+.Pricing .Protection_Plans p {
+    color: #767676;
+    font-weight: 500;
+}
+
+.Pricing .Free_Plans {
+    height: 100%;
+    border-radius: 15px;
+    background: #FFF;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.20);
+}
+
+.Pricing .Free_Plans h3 {
+    color: #006BB8;
+    font-weight: 600;
+}
+
+.Pricing .Free_Plans p {
+    color: #767676;
+    font-weight: 500;
+}
+
+.Pricing .Free_Plans .plans_list {
+    margin-top: 15px;
+}
+
+.Pricing .Free_Plans .plans_list p {
+    color: #000;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.Pricing .Free_Plans .card-footer-Pricing {
+    background-color: white;
+    border: 0;
+    padding-bottom: 30px;
+    border-radius: 15px;
+}
+
+.Pricing .Free_Plans .plans_list i {
+    color: #006BB8F2;
+    margin-right: 5px;
+}
+
+.Pricing .Free_Plans .btn-select {
+    border-radius: 12px;
+    border: 0px;
+    background: #006BB8;
+    color: #fff;
+    padding: 10px 40px;
+}
+
+.Pricing .Free_Plans .Pricing-switch {
+    color: #737373;
+    font-size: 20px;
+}
+
+.Pricing .Free_Plans .Pricing-switch .form-check-input:checked {
+    background-color: #55555569;
+    border-color: #55555569;
+}
+
+.Pricing .Free_Plans .Pricing-switch .form-switch .form-check-input:checked {
+    background-image: url(../src/assets/switch.png);
+}
+
+
+/* Calculator */
+.slider-wrapper {
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.noUi-value-horizontal {
+    -webkit-transform: translate(-50%, 50%);
+    transform: translate(-50%, 110%) !important;
+    font-size: 10px;
+}
+
+.noUi-target {
+    background: #5dbcff8f !important;
+    border-radius: 30px;
+    border: 1px solid #D3D3D3;
+    box-shadow: none !important;
+}
+
+.noUi-connect {
+    background: #006BB8 !important;
+}
+
+.noUi-handle {
+    border: 1px solid #006BB8 !important;
+    border-radius: 3px;
+    background: #006bb8 !important;
+    cursor: default;
+    box-shadow: inset 0 0 1px #006BB8, inset 0 1px 7px #006BB8, 0 3px 6px -3px #BBB !important;
+}
+
+.noUi-horizontal {
+    height: 10px !important;
+}
+
+.noUi-horizontal .noUi-handle {
+    height: 20px !important;
+}
+
+.noUi-handle:after, .noUi-handle:before {
+    height: 11px !important;
+    top: 4px !important;
+}
+
+.noUi-marker-horizontal.noUi-marker-large {
+    height: 10px !important;
+}
+
+@media (max-width: 1200px) {
+    .why_choose_us_item .why_choose_us_item_content {
+        width: 70%;
+        word-wrap: break-word;
+    }
+
+    .Use_Software_section .Use_Software_steps_area .Use_Software_step_item .Use_Software_step_number {
+        width: 100px;
+        height: 100px;
+        top: 50px;
+    }
+
+    .Use_Software_section .Use_Software_steps_area .Use_Software_step_item .Use_Software_step_number span {
+        font-size: 40px;
+        font-weight: 800;
+    }
+
+    .Use_Software_section .Use_Software_steps_area .Use_Software_step_item .Use_Software_step_number small {
+        /* font-size: 18px; */
+        font-weight: 500;
+        margin: 0px 0px 9px 3px;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: #5C5C5C;
+    }
+
+    .Use_Software_section .Use_Software_steps_area .Use_Software_step_item .Use_Software_step_content {
+        width: 230px;
+        padding: 60px 15px 15px;
+        border-radius: 15px;
+        line-height: 25px;
+        font-size: 16px;
+    }
+
+    .Use_Software_section .Use_Software_steps_area .Use_Software_step_arrow img {
+        height: 30px;
+    }
+}
+
+@media (max-width: 991px) {
+    .nav_right_side {
+        flex-direction: column;
+        text-align: center;
+        margin: auto;
+    }
+
+    .nav_right_side ul.navbar-nav-scroll {
+        margin: auto;
+    }
+
+    .header_section .navbar-collapse .navbar-nav .nav-item .nav-link {
+        padding: 5px 15px;
+    }
+
+    .header_section {
+        padding: 15px 0;
+    }
+
+    .Use_Software_section .Use_Software_steps_area {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .Use_Software_section .Use_Software_steps_area .Use_Software_step_item .Use_Software_step_number {
+        width: 120px;
+        height: 120px;
+        background-color: #fff;
+        border-radius: 50%;
+        border: 7px solid #E5F4FF;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 5;
+        position: relative;
+        top: 60px;
+    }
+
+    .Use_Software_section .Use_Software_steps_area .Use_Software_step_item .Use_Software_step_number span {
+        font-size: 60px;
+        font-weight: 800;
+    }
+
+    .Use_Software_section .Use_Software_steps_area .Use_Software_step_item .Use_Software_step_number small {
+        /* font-size: 18px; */
+        font-weight: 500;
+        margin: 0px 0px 15px 3px;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: #5C5C5C;
+    }
+
+    .Use_Software_section .Use_Software_steps_area .Use_Software_step_item .Use_Software_step_content {
+        width: 250px;
+        height: auto;
+        background-color: #fff;
+        padding: 70px 15px 15px;
+        border-radius: 15px;
+        min-height: 200px;
+        text-align: center;
+        font-size: 17px;
+        letter-spacing: 1.1px;
+        color: #252525;
+        line-height: 28px;
+    }
+
+    .Use_Software_section .Use_Software_steps_area .Use_Software_step_arrow img {
+        /* height: 40px; */
+        transform: rotate(90deg);
+        margin-top: 60px;
+    }
+
+    .Sign-section .Sign-Up-card-section .form-check-label {
+        font-size: 14px;
+    }
+
+    .forget_password {
+        font-size: 14px;
+    }
+
+}
+
+@media (max-width: 767px) {
+    .why_choose_us_section .why_choose_us_item .why_choose_us_item_content {
+        width: 100%;
+    }
+
+    .Calculator_section .Calculator_AirData_area .Possible_sizing_heading div {
+        font-size: 13px;
+    }
+
+    .Calculator_section .Calculator_projectName_area .form-group {
+        flex-direction: column;
+        text-align: start;
+        align-items: flex-start
+    }
+
+    .Sign-Up-card-section .card-body {
+        padding: 0;
+    }
+
+    .Sign-section .Sign-Up-card-section .Sign_Up_subheading {
+        color: #A9A9A9;
+        font-family: Lato;
+        font-size: 13px;
+        font-style: normal;
+    }
 }
