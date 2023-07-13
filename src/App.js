@@ -1,21 +1,16 @@
 import './App.css'
 import Header from './components/common/Header';
- 
-import About from './components/Pages/About';
-import Signup from './components/Pages/signup';
+import Contact from './components/Pages/Contact';
+import Calculator from './components/Pages/Calculator';
 
-import Footer from './components/common/Footer';
 
 function App() {
   return (
     <div >
-      <Header />
-       
-      <About />
-
-      <Signup />
-
-      <Footer />
+   <Header/>
+   <Contact/>
+   {/* <Calculator/> */}
+   <Footer/>
     </div>
   );
 }
