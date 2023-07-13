@@ -5,38 +5,37 @@ import { useLocation } from 'react-router-dom'
 const Header = () => {
     const location = useLocation();
     const { pathname } = location;
-    console.log(pathname)
   let routes = [
    {
     id : 1 ,
     name : "Home",
-    path : "Home",
-    Active : pathname === '/Home' ? "active" : ""
+    path : "/",
+    Active : pathname === '/' ? "active" : ""
 } ,
    {
-    id : 1 ,
+    id : 2,
     name : "Free Calculator",
-    path : "Home",
-    Active : pathname === '/Home' ? "active" : ""
+    path : "Calculator",
+    Active : pathname === '/Calculator' ? "active" : ""
    } ,
    {
-    id : 1 ,
+    id : 3 ,
     name : "About Us",
-    path : "Home",
-    Active : pathname === '/Home' ? "active" : ""
+    path : "About",
+    Active : pathname === '/About' ? "active" : ""
    } ,
    ,
    {
-    id : 1 ,
+    id : 4,
     name : "Pricing",
-    path : "Home",
-    Active : pathname === '/Home' ? "active" : ""
+    path : "Pricing",
+    Active : pathname === '/Pricing' ? "active" : ""
    } ,
    {
-    id : 1 ,
+    id : 5 ,
     name : "Contact Us",
-    path : "Home",
-    Active : pathname === '/Home' ? "active" : ""
+    path : "Contact",
+    Active : pathname === '/Contact' ? "active" : ""
    } 
   ]
 
@@ -46,9 +45,9 @@ const Header = () => {
     <header className="container-fluid header_section">
     <nav className="navbar navbar-expand-lg navbar-light p-0">
         <div className="container">
-            <a className="navbar-brand logo_area p-0" href="#">
+            <Link className="navbar-brand logo_area p-0" to="/">
                 <img src={logo}/>
-            </a>
+            </Link>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
                 aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                 <i className=" fa-solid fa-bars"></i>
@@ -68,7 +67,7 @@ const Header = () => {
                             <a className="nav-link" href="#">Free Trial</a>
                         </li>
                     </ul>
-                    <a href="SignIn.html" className="btn btn_signin ">SIGN IN</a>
+                    <Link to='Signup' className="btn btn_signin ">SIGN IN</Link>
                 </div>
             </div>
         </div>
