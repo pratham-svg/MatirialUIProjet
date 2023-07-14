@@ -43,7 +43,6 @@ function ForgetPassword() {
                 </div>
             </div>
         </div>
-
     </section>
     </div>
   )

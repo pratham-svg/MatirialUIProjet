@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ForgetPassword from './ForgetPassword';
-const schema = yup.object({
+const schemaSignUp = yup.object({
 
   
     email: yup.string().email().required(),
@@ -34,26 +34,33 @@ const schemaSignIn = yup.object().shape({
 
 function Signup() {
 
-    const {
-        register,
-        handleSubmit,
-        reset,
-        formState: { errors },
-    } = useForm({
-        resolver: yupResolver(schema, schemaSignIn),
-    });
-    const onSubmitHandler = (data) => {
-        console.log("------------------->", { data });
-        reset();
-    };
+       const onSubmitHandler = (data) => {
+          console.log("------------------->", { data });
+          resetSignUp();
+      };
 
-    // const { register, handleSubmit, formState: { errors }, reset } = useForm({
-    //     resolver: yupResolver(, schema),
-    // });
+     const {
+        register: registerSignIn,
+        handleSubmit: handleSubmitSignIn,
+        reset: resetSignIn,
+        formState: { errors : signInErrors },
+      } = useForm({
+        resolver: yupResolver(schemaSignIn),
+      });
+
+        const {
+          register: registerSignUp,
+          handleSubmit: handleSubmitSignUp,
+          reset: resetSignUp,
+          formState: { errors: signUpErrors },
+        } = useForm({
+          resolver: yupResolver(schemaSignUp),
+        });
+    
 
     const onSubmitHandlerSignIn = (data) => {
-        console.log({ data },"-------------------");
-        reset();
+        console.log({ data });
+        resetSignIn();
     };
     const [activeTab, setActiveTab] = useState('signUp');
 
@@ -123,38 +130,38 @@ function Signup() {
                                                                     charms of
                                                                     pleasure of the moment.</p>
                                                             </div>
-                                                            <form onSubmit={handleSubmit(onSubmitHandler)}>
+                                                            <form onSubmit={handleSubmitSignUp(onSubmitHandler)}>
                                                                 <div className="col-md-6 mb-3">
                                                                     <label className="form-label">First Name</label>
-                                                                    <input type="text" className="form-control " placeholder="Ex.-"  {...register("firstName")} />
-                                                                    <p>{errors.firstName?.message}</p>
+                                                                    <input type="text" className="form-control " placeholder="Ex.-"  {...registerSignUp("firstName")} />
+                                                                    <p>{signUpErrors.firstName?.message}</p>
                                                                 </div>
                                                                 <div className="col-md-6 mb-3"><label className="form-label">Last Name</label>
-                                                                    <input type="text" className="form-control " placeholder="Ex.-" {...register("lastName")} />
-                                                                    <p>{errors.lastName?.message}</p>
+                                                                    <input type="text" className="form-control " placeholder="Ex.-" {...registerSignUp("lastName")} />
+                                                                    <p>{signUpErrors.lastName?.message}</p>
                                                                 </div>
                                                                 <div className="col-md-12 mb-3"><label className="form-label">Phone
                                                                     Number</label>
                                                                     <input type="text" className="form-control "
-                                                                        placeholder="Ex.- 00012-52166 " {...register("phoneNumber")} />
-                                                                    <p>{errors.phoneNumber?.message}</p>
+                                                                        placeholder="Ex.- 00012-52166 " {...registerSignUp("phoneNumber")} />
+                                                                    <p>{signUpErrors.phoneNumber?.message}</p>
                                                                 </div>
                                                                 <div className="col-md-12 mb-3"><label className="form-label">Email</label>
-                                                                    <input type="text" className="form-control "  {...register("email")}
+                                                                    <input type="text" className="form-control "  {...registerSignUp("email")}
                                                                         placeholder="Ex.- mailto:email@gmail.com" />
-                                                                    <p>{errors.email?.message}</p>
+                                                                    <p>{signUpErrors.email?.message}</p>
                                                                 </div>
                                                                 <div className="col-md-6 mb-3">
                                                                     <label className="form-label">Password</label>
                                                                     <input type="text" className="form-control "
-                                                                        {...register("password")} placeholder="Ex.- ******** " />
-                                                                    <p>{errors.password?.message}</p>
+                                                                        {...registerSignUp("password")} placeholder="Ex.- ******** " />
+                                                                    <p>{signUpErrors.password?.message}</p>
                                                                 </div>
                                                                 <div className="col-md-6 mb-3">
                                                                     <label className="form-label">Confirm Password</label>
-                                                                    <input type="text" className="form-control "  {...register("confirmPassword")}
+                                                                    <input type="text" className="form-control "  {...registerSignUp("confirmPassword")}
                                                                         placeholder="Ex.- ******** " />
-                                                                    <p>{errors.confirmPassword?.message}</p>
+                                                                    <p>{signUpErrors.confirmPassword?.message}</p>
                                                                 </div>
                                                                 <div className="col-md-12 mb-3">
                                                                     <div className="mb-3 form-check">
@@ -197,18 +204,18 @@ function Signup() {
                                                                     beguiled and demoralized by the charms of pleasure of the
                                                                     moment.</p>
                                                             </div>
-                                                            <form onSubmit={handleSubmit(onSubmitHandlerSignIn)}>
+                                                            <form onSubmit={handleSubmitSignIn(onSubmitHandlerSignIn)}>
                                                                 <div className="col-md-12 mb-3"><label className="form-label">Email</label>
-                                                                    <input type="email" className="form-control " {...register("email")}
+                                                                    <input type="email" className="form-control " {...registerSignIn("email")}
                                                                         placeholder="Ex.- email@gmail.com" required />
-                                                                    <p>{errors.email?.message}</p>
+                                                                    <p>{signInErrors.email?.message}</p>
                                                                 </div>
                                                                 <div className="col-md-12 mb-3">
                                                                     <label className="form-label">Password</label>
-                                                                    <input  {...register("password")}
+                                                                    <input  {...registerSignIn("password")}
                                                                         type="password" className="form-control "
                                                                         placeholder="Ex.- ******** " required />
-                                                                    <p>{errors.password?.message}</p>
+                                                                    <p>{signInErrors.password?.message}</p>
                                                                 </div>
 
                                                                 <div className="col-md-6 mb-3">
