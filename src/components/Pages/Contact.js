@@ -1,6 +1,5 @@
- import React from 'react';
- import Header from '../common/Header';
- import Footer from "../common/Footer"
+ 
+import React from 'react';
  import Address from "../../assets/Address.png"
  import mail from "../../assets/mail.png"
  import call from "../../assets/call.png"
