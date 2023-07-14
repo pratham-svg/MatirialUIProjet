@@ -1,8 +1,45 @@
 import React, { useState } from 'react';
 import Sign_Up from '../../assets/Sign_Up.png';
- 
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup.object({
+
+    // email is required with email format
+    email: yup.string().email().required(),
+  
+    // phone number needs to match the regex expression
+    phoneNumber: yup
+      .string()
+      .matches(
+        /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+        "Enter a valid phone number"
+      ),
+  
+    firstName: yup.string().required(),
+    lastName: yup.string().required(),
+   
+  
+    // password is required with minimum length of 8
+    password: yup.string().min(8).max(32).required(),
+    confirmPassword: yup.string().min(8).max(32).required(),
+  });
 
 function Signup() {
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+      } = useForm({
+        resolver: yupResolver(schema),
+      });
+      const onSubmitHandler = (data) => {
+        console.log("------------------->",{  data });
+        reset();
+      };
 
     const [activeTab, setActiveTab] = useState('signUp');
 
@@ -75,33 +112,40 @@ function Signup() {
                                                             charms of
                                                             pleasure of the moment.</p>
                                                 </div>
+                                                  <form  onSubmit={handleSubmit(onSubmitHandler)}>
                                                 <div className="col-md-6 mb-3">
                                                     <label className="form-label">First Name</label>
-                                                    <input type="text" className="form-control " placeholder="Ex.-"/>
+                                                    <input type="text" className="form-control " placeholder="Ex.-"  {...register("firstName")} />
+                                                    <p>{errors.firstName?.message}</p>
                                                 </div>
                                                 <div className="col-md-6 mb-3"><label className="form-label">Last Name</label>
-                                                    <input type="text" className="form-control " placeholder="Ex.-"/>
+                                                    <input type="text" className="form-control " placeholder="Ex.-" {...register("lastName")}/>
+                                                    <p>{errors.lastName?.message}</p>
                                                 </div>
                                                 <div className="col-md-12 mb-3"><label className="form-label">Phone
                                                         Number</label>
                                                     <input type="text" className="form-control "
-                                                        placeholder="Ex.- 00012-52166 "/>
+                                                        placeholder="Ex.- 00012-52166 " {...register("phoneNumber")}/>
+                                                           <p>{errors.phoneNumber?.message}</p>
                                                 </div>
                                                 <div className="col-md-12 mb-3"><label className="form-label">Email</label>
-                                                    <input type="text" className="form-control "
+                                                    <input type="text" className="form-control "  {...register("email")} 
                                                         placeholder="Ex.- email@gmail.com"/>
+                                                        <p>{errors.email?.message}</p>
                                                 </div>
                                                 <div className="col-md-6 mb-3">
                                                     <label className="form-label">Password</label>
                                                     <input type="text" className="form-control "
-                                                        placeholder="Ex.- ******** "/>
+                                                       {...register("password")}  placeholder="Ex.- ******** "/>
+                                                        <p>{errors.password?.message}</p>
                                                 </div>
                                                 <div className="col-md-6 mb-3">
                                                     <label className="form-label">Confirm Password</label>
-                                                    <input type="text" className="form-control "
+                                                    <input type="text" className="form-control "  {...register("confirmPassword")} 
                                                         placeholder="Ex.- ******** "/>
+                                                        <p>{errors.confirmPassword?.message}</p>
                                                 </div>
-                                                <div className="colmd-12 mb-3">
+                                                <div className="col-md-12 mb-3">
                                                     <div className="mb-3 form-check">
                                                         <input type="checkbox" className="form-check-input"
                                                             id="exampleCheck1"/>
@@ -110,10 +154,11 @@ function Signup() {
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <button className="btn Sign_btn_submit">
+                                                    <button className="btn Sign_btn_submit" >
                                                         Submit
                                                     </button>
                                                 </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
