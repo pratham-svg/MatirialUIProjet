@@ -1,6 +1,5 @@
- import React from 'react';
- import Header from '../common/Header';
- import Footer from "../common/Footer"
+ 
+import React from 'react';
  import Address from "../../assets/Address.png"
  import mail from "../../assets/mail.png"
  import call from "../../assets/call.png"
@@ -10,7 +9,7 @@
  const Contact = () => {
    return (
     <>
-    <Header/>
+   
       <section className="container-fluid PageTitle_banner_section p-0">
         <div className="container">
             <h1 className="PageTitle_banner_heading">CONTACT US</h1>
@@ -119,7 +118,7 @@
         </div>
     </section>
 
-   <Footer/>
+   
     </>
    )
  }
