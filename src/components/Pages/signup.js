@@ -1,9 +1,31 @@
 import React, { useState } from 'react';
 import Sign_Up from '../../assets/Sign_Up.png';
-import ForgetPassword from './ForgetPassword';
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import ForgetPassword from './ForgetPassword';
+const schema = yup.object({
+
+  
+    email: yup.string().email().required(),
+
+ 
+    phoneNumber: yup
+        .string()
+        .matches(
+            /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+            "Enter a valid phone number"
+        ),
+
+    firstName: yup.string().required(),
+    lastName: yup.string().required(),
+
+ 
+    password: yup.string().min(8).max(32).required(),
+    confirmPassword: yup.string().min(8).max(32).required(),
+});
+
+
 
 const schemaSignIn = yup.object().shape({
     email: yup.string().email().required(),
@@ -12,9 +34,22 @@ const schemaSignIn = yup.object().shape({
 
 function Signup() {
 
-    const { register, handleSubmit, formState: { errors }, reset } = useForm({
-        resolver: yupResolver(schemaSignIn),
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(schema, schemaSignIn),
     });
+    const onSubmitHandler = (data) => {
+        console.log("------------------->", { data });
+        reset();
+    };
+
+    // const { register, handleSubmit, formState: { errors }, reset } = useForm({
+    //     resolver: yupResolver(, schema),
+    // });
 
     const onSubmitHandlerSignIn = (data) => {
         console.log({ data });
@@ -88,45 +123,53 @@ function Signup() {
                                                                     charms of
                                                                     pleasure of the moment.</p>
                                                             </div>
-                                                            <div className="col-md-6 mb-3">
-                                                                <label className="div-label">First Name</label>
-                                                                <input type="text" className="form-control " placeholder="Ex.-" />
-                                                            </div>
-                                                            <div className="col-md-6 mb-3"><label className="form-label">Last Name</label>
-                                                                <input type="text" className="form-control " placeholder="Ex.-" />
-                                                            </div>
-                                                            <div className="col-md-12 mb-3"><label className="form-label">Phone
-                                                                Number</label>
-                                                                <input type="number" className="form-control "
-                                                                    placeholder="Ex.- 00012-52166 " />
-                                                            </div>
-                                                            <div className="col-md-12 mb-3"><label className="form-label">Email</label>
-                                                                <input type="email" className="form-control "
-                                                                    placeholder="Ex.- email@gmail.com" />
-                                                            </div>
-                                                            <div className="col-md-6 mb-3">
-                                                                <label className="form-label">Password</label>
-                                                                <input type="password" className="form-control "
-                                                                    placeholder="Ex.- ******** " />
-                                                            </div>
-                                                            <div className="col-md-6 mb-3">
-                                                                <label className="form-label">Confirm Password</label>
-                                                                <input type="password" className="form-control "
-                                                                    placeholder="Ex.- ******** " />
-                                                            </div>
-                                                            <div className="colmd-12 mb-3">
-                                                                <div className="mb-3 form-check">
-                                                                    <input type="checkbox" className="form-check-input"
-                                                                        id="exampleCheck1" />
-                                                                    <label className="form-check-label" for="exampleCheck1">Terms And
-                                                                        Conditions</label>
+                                                            <form onSubmit={handleSubmit(onSubmitHandlerSignIn)}>
+                                                                <div className="col-md-6 mb-3">
+                                                                    <label className="form-label">First Name</label>
+                                                                    <input type="text" className="form-control " placeholder="Ex.-"  {...register("firstName")} />
+                                                                    <p>{errors.firstName?.message}</p>
                                                                 </div>
-                                                            </div>
-                                                            <div>
-                                                                <button className="btn Sign_btn_submit" type="submit">
-                                                                    Submit
-                                                                </button>
-                                                            </div>
+                                                                <div className="col-md-6 mb-3"><label className="form-label">Last Name</label>
+                                                                    <input type="text" className="form-control " placeholder="Ex.-" {...register("lastName")} />
+                                                                    <p>{errors.lastName?.message}</p>
+                                                                </div>
+                                                                <div className="col-md-12 mb-3"><label className="form-label">Phone
+                                                                    Number</label>
+                                                                    <input type="text" className="form-control "
+                                                                        placeholder="Ex.- 00012-52166 " {...register("phoneNumber")} />
+                                                                    <p>{errors.phoneNumber?.message}</p>
+                                                                </div>
+                                                                <div className="col-md-12 mb-3"><label className="form-label">Email</label>
+                                                                    <input type="text" className="form-control "  {...register("email")}
+                                                                        placeholder="Ex.- mailto:email@gmail.com" />
+                                                                    <p>{errors.email?.message}</p>
+                                                                </div>
+                                                                <div className="col-md-6 mb-3">
+                                                                    <label className="form-label">Password</label>
+                                                                    <input type="text" className="form-control "
+                                                                        {...register("password")} placeholder="Ex.- ******** " />
+                                                                    <p>{errors.password?.message}</p>
+                                                                </div>
+                                                                <div className="col-md-6 mb-3">
+                                                                    <label className="form-label">Confirm Password</label>
+                                                                    <input type="text" className="form-control "  {...register("confirmPassword")}
+                                                                        placeholder="Ex.- ******** " />
+                                                                    <p>{errors.confirmPassword?.message}</p>
+                                                                </div>
+                                                                <div className="col-md-12 mb-3">
+                                                                    <div className="mb-3 form-check">
+                                                                        <input type="checkbox" className="form-check-input"
+                                                                            id="exampleCheck1" />
+                                                                        <label className="form-check-label" for="exampleCheck1">Terms And
+                                                                            Conditions</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <button className="btn Sign_btn_submit" >
+                                                                        Submit
+                                                                    </button>
+                                                                </div>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -140,9 +183,7 @@ function Signup() {
                                             </div>
                                         </div>
                                     </div>
-
-                                    {/* ---------sign in-----------  */}
-
+                                    {/* ---sign in  */}
                                     <div className={`tab-pane fade ${activeTab === 'signIn' ? 'active show' : ''}`} id="pills-Sign-In" role="tabpanel" aria-labelledby="pills-Sign-In-tab" tabIndex="0">
                                         <div className="row">
                                             <div className="col-md-6 mb-3">
@@ -156,8 +197,7 @@ function Signup() {
                                                                     beguiled and demoralized by the charms of pleasure of the
                                                                     moment.</p>
                                                             </div>
-                                                            <form onSubmit={handleSubmit(onSubmitHandlerSignIn)}>
-
+                                                            <form onSubmit={handleSubmit(onSubmitHandler)}>
                                                                 <div className="col-md-12 mb-3"><label className="form-label">Email</label>
                                                                     <input type="email" className="form-control " {...register("email")}
                                                                         placeholder="Ex.- email@gmail.com" required />
@@ -183,7 +223,7 @@ function Signup() {
                                                                     <a href={<ForgetPassword />} className="forget_password"> Forget Password?</a>
                                                                 </div>
                                                                 <div>
-                                                                    <button  className="btn Sign_btn_submit" type="submit">
+                                                                    <button className="btn Sign_btn_submit" type="submit">
                                                                         Submit
                                                                     </button>
                                                                 </div>
