@@ -1,16 +1,41 @@
- import React from 'react';
- import Header from '../common/Header';
- import Footer from "../common/Footer"
+ 
+import React from 'react';
  import Address from "../../assets/Address.png"
  import mail from "../../assets/mail.png"
  import call from "../../assets/call.png"
  import facebook from "../../assets/facebook.png"
  import twitter from "../../assets/twitter.png"
  import google from "../../assets/google.png"
+ import { useForm } from "react-hook-form";
+ import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { redirect } from 'react-router-dom';
+
+
+
+const schema = yup.object().shape({
+    firstName: yup?.string()?.required()?.matches(/^[a-zA-Z\s]*$/, 'First name must not contain symbols or numbers'),
+  lastName: yup?.string().required()?.matches(/^[a-zA-Z\s]*$/, 'Last name must not contain symbols or numbers'),
+  email: yup?.string()?.email()?.required(),
+  subject: yup?.string()?.required(),
+  message: yup?.string()?.required(),
+
+    
+  });
+
+
  const Contact = () => {
+
+
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({
+        resolver: yupResolver(schema),
+      });
+      const onSubmitHandler = (data) => {
+        console.log({ data });
+        reset();
+      };
    return (
     <>
-    <Header/>
       <section className="container-fluid PageTitle_banner_section p-0">
         <div className="container">
             <h1 className="PageTitle_banner_heading">CONTACT US</h1>
@@ -79,23 +104,30 @@
                             </a>
                 </div>
                 <div className="col-md-8">
-                    <form>
+
+                    <form onSubmit={handleSubmit(onSubmitHandler)}>
                         <div className="row">
                             <div className="col-md-6 mb-3">
-                                <input type="text" className="form-control  form-control-lg" placeholder="First name"/>
+                                <input  {...register("firstName")} type="text" className="form-control  form-control-lg" placeholder="First name" required />
+                                <p style={{color:"red"}}>{errors.firstName?.message}</p>
                             </div>
                             <div className="col-md-6 mb-3">
-                                <input type="text" className="form-control  form-control-lg" placeholder="last name"/>
+                                <input  {...register("lastName")} type="text" className="form-control  form-control-lg" placeholder="last name" required/>
+                                <p style={{color:"red"}}>{errors.lastName?.message}</p>
                             </div>
                             <div className="col-md-12 mb-3">
-                                <input type="text" className="form-control  form-control-lg" placeholder="Email"/>
+                                <input {...register("email")} type="email" className="form-control  form-control-lg" placeholder="Email" required />
+                                <p style={{color:"red"}}>{errors.email?.message}</p>
                             </div>
                             <div className="col-md-12 mb-3">
-                                <input type="text" className="form-control  form-control-lg" placeholder="Subject"/>
+                                <input {...register("subject")}  type="text" className="form-control  form-control-lg"  placeholder="Subject" required />
+                                <p style={{color:"red"}}>{errors.subject?.message}</p>
                             </div>
                             <div className="col-md-12 mb-3">
-                                <textarea className="form-control form-control-lg" placeholder="Message" name="" id=""
-                                    cols="30" rows="5"></textarea>
+                                <textarea  {...register("message")}      className="form-control form-control-lg" placeholder="Message"  
+                                    cols="30" rows="5" required></textarea>
+                                     <p style={{color:"red"}}>{errors.message?.message}</p>
+                                    
                             </div>
                             <div>
                                 <button className="btn btn_submit">
@@ -118,8 +150,6 @@
                 referrerpolicy="no-referrer-when-downgrade" title=" "/>
         </div>
     </section>
-
-   <Footer/>
     </>
    )
  }
