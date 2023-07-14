@@ -223,36 +223,35 @@ function Signup() {
                                                                     <p>{signInErrors.password?.message}</p>
                                                                 </div>
 
-                                                                <div className="col-md-6 mb-3">
-                                                                    <div className="mb-3 form-check">
-                                                                        <input type="checkbox" className="form-check-input"
-                                                                            id="exampleCheck1" />
-                                                                        <label className="form-check-label" for="exampleCheck1">Remember me
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="col-md-6 text-end">
-                                                                    <a href={<ForgetPassword />} className="forget_password"> Forget Password?</a>
-                                                                </div>
-                                                                <div>
-                                                                    <button className="btn Sign_btn_submit" type="submit">
-                                                                        Submit
-                                                                    </button>
-                                                                </div>
-                                                            </form>
-                                                        </div>
+                                                <div className="col-md-6 mb-3">
+                                                    <div className="mb-3 form-check">
+                                                        <input type="checkbox" className="form-check-input"
+                                                            id="exampleCheck1"/>
+                                                        <label className="form-check-label" for="exampleCheck1">Remember me
+                                                        </label>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div className="col-md-6 mb-3">
-                                                <div className="card Sign-Up-card-section-img">
-                                                    <div className="card-body">
-                                                        <img src={Sign_Up} className="img-fluid" alt="" />
-                                                    </div>
+                                                <div className="col-md-6 text-end">
+                                                    <a href="" className="forget_password"> Forget Password?</a>
+                                                </div>
+                                                <div>
+                                                    <a href="Projects_List.html" className="btn Sign_btn_submit">
+                                                        Submit
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <div className="card Sign-Up-card-section-img">
+                                        <div className="card-body">
+                                            <img src={Sign_Up} className="img-fluid" alt=""/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                                 </div>
                             </div>
