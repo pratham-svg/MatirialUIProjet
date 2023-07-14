@@ -52,7 +52,7 @@ function Signup() {
     // });
 
     const onSubmitHandlerSignIn = (data) => {
-        console.log({ data });
+        console.log({ data },"-------------------");
         reset();
     };
     const [activeTab, setActiveTab] = useState('signUp');
@@ -123,7 +123,7 @@ function Signup() {
                                                                     charms of
                                                                     pleasure of the moment.</p>
                                                             </div>
-                                                            <form onSubmit={handleSubmit(onSubmitHandlerSignIn)}>
+                                                            <form onSubmit={handleSubmit(onSubmitHandler)}>
                                                                 <div className="col-md-6 mb-3">
                                                                     <label className="form-label">First Name</label>
                                                                     <input type="text" className="form-control " placeholder="Ex.-"  {...register("firstName")} />
@@ -197,7 +197,7 @@ function Signup() {
                                                                     beguiled and demoralized by the charms of pleasure of the
                                                                     moment.</p>
                                                             </div>
-                                                            <form onSubmit={handleSubmit(onSubmitHandler)}>
+                                                            <form onSubmit={handleSubmit(onSubmitHandlerSignIn)}>
                                                                 <div className="col-md-12 mb-3"><label className="form-label">Email</label>
                                                                     <input type="email" className="form-control " {...register("email")}
                                                                         placeholder="Ex.- email@gmail.com" required />
