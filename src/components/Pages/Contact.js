@@ -47,7 +47,7 @@
                             <img src={call} alt=""/>
                         </div>
                         <div className="why_choose_us_item_content text-start">
-                            <h5 className="fw-bold text-muted">Phone Number</h5 >
+                            <h5 className="fw-bold text-muted">Phone Number </h5 >
                             <p>1 (609) 123-45-67</p>
                         </div>
                     </div>

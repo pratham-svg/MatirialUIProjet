@@ -2,7 +2,7 @@ import React from 'react'
 
 const Calculator = () => {
   return (
-   <>
+   <div>
     <section className="container-fluid Calculator_section  py-5">
         <div className="container">
             <div className="row">
@@ -190,7 +190,7 @@ const Calculator = () => {
         </div>
     </section>
    
-   </>
+   </div>
   )
 }
 

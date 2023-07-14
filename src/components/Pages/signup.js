@@ -1,5 +1,6 @@
 import React from 'react'
 import Sign_Up from '../../assets/Sign_Up.png'
+import { Link } from 'react-router-dom'
 
 function Signup() {
   return (
@@ -131,12 +132,12 @@ function Signup() {
                                                     </div>
                                                 </div>
                                                 <div className="col-md-6 text-end">
-                                                    <a href="" className="forget_password"> Forget Password?</a>
+                                                    <Link to="/ForgotPassword" className="forget_password"> Forget Password?</Link>
                                                 </div>
                                                 <div>
-                                                    <a href="Projects_List.html" className="btn Sign_btn_submit">
+                                                    <Link to="Projects_List.html" className="btn Sign_btn_submit">
                                                         Submit
-                                                    </a>
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </div>

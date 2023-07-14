@@ -8,10 +8,13 @@ import Contact from './components/Pages/Contact'
 import Pricing from './components/Pages/Pricing';
 import Calculator from './components/Pages/Calculator';
 import Signup from './components/Pages/signup';
+import ForgotPassword from './components/Pages/ForgotPassword';
+import ResetPassword from './components/Pages/ResetPassword';
 
 function App() {
+ 
   return (
-    <div >
+    <div>
     <Router>
     <Header/>
     <Routes>
@@ -21,6 +24,8 @@ function App() {
     <Route path='/Contact' element={<Contact/>}/>
     <Route path='/Pricing' element={<Pricing/>}/>
     <Route path='/Signup' element={<Signup/>}/>
+    <Route path='/ForgotPassword' element={<ForgotPassword/>} />
+    <Route path='/ResetPassword' element={<ResetPassword/>} />
     </Routes>
     <Footer/>
     </Router>

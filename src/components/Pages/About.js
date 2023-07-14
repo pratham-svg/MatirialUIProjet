@@ -5,7 +5,6 @@ import mission from '../../assets/Mission_Vision_img.png'
 function About() {
     return (
         <div>
-
             <section className="container-fluid PageTitle_banner_section p-0">
                 <div className="container">
                     <h1 className="PageTitle_banner_heading">ABOUT US</h1>

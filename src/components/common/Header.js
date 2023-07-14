@@ -15,26 +15,26 @@ const Header = () => {
    {
     id : 2,
     name : "Free Calculator",
-    path : "Calculator",
+    path : "/Calculator",
     Active : pathname === '/Calculator' ? "active" : ""
    } ,
    {
     id : 3 ,
     name : "About Us",
-    path : "About",
+    path : "/About",
     Active : pathname === '/About' ? "active" : ""
    } ,
    ,
    {
     id : 4,
     name : "Pricing",
-    path : "Pricing",
+    path : "/Pricing",
     Active : pathname === '/Pricing' ? "active" : ""
    } ,
    {
     id : 5 ,
     name : "Contact Us",
-    path : "Contact",
+    path : "/Contact",
     Active : pathname === '/Contact' ? "active" : ""
    } 
   ]
@@ -55,7 +55,7 @@ const Header = () => {
             <div className="collapse navbar-collapse" id="navbarScroll">
                 <ul className="navbar-nav me-auto  my-lg-0 navbar-nav-scroll">
             {    routes.map(({ id , name , path , Active})=>  <li className="nav-item">
-              <Link className={`nav-link ${Active}`} to={path} >{name}</Link>
+              <Link className={`nav-link ${Active}`} to={path} id={id} >{name}</Link>
           </li>
             )}
                 </ul>
