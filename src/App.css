@@ -614,6 +614,12 @@ button:focus, button:active, button:hover {
     font-weight: 400;
 }
 
+
+.Sign-section-Password {
+    margin: 100px 0;
+}
+
+
 /* Project List */
 .Project-section {
     margin-top: 68.8px;
