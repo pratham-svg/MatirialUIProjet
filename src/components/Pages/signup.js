@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ForgetPassword from './ForgetPassword';
+
 const schemaSignUp = yup.object({
 
   
@@ -66,9 +67,13 @@ function Signup() {
 
     const handleTabChange = (tab) => {
         setActiveTab(tab);
+        resetForm();
     };
 
-
+    const resetForm = () => {
+        resetSignUp();
+        resetSignIn();
+      };
 
 
     return (
