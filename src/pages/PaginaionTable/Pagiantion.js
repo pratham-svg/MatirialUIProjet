@@ -8,6 +8,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import axios from '../../../node_modules/axios/index';
 
 const columns = [
   { id: 'firstname', label: 'FirstName', minWidth: 170 },
@@ -60,7 +61,20 @@ const rows = [
 
 const Pagiantion = () => {const [page, setPage] = React.useState(0);
 const [rowsPerPage, setRowsPerPage] = React.useState(10);
+const [ UserData , SetUserData ] = React.useState([])
 
+const setuserList = async ()=>{
+  let UserList = await axios.get('https://machanicalcalculator.microlent.com/api/user/get-All' ,{ headers: { 'authorization':`bearer ${localStorage.getItem("token")}` } } )
+  console.log(UserList)
+  SetUserData(UserList?.data?.data)
+  console.log(UserData)
+}
+
+React.useEffect(  ()=>{
+  setuserList()
+  },[])
+
+React.useEffect(()=>{})
 const handleChangePage = (event, newPage) => {
   setPage(newPage);
 };
@@ -89,7 +103,7 @@ return (
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows
+          {UserData
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((row) => {
               return (
