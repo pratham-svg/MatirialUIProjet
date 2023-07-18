@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-
+// import Box from '@mui/material/Box';
+// import LinearProgress from '@mui/material/LinearProgress';
 // material-ui
+import axios from '../../../../node_modules/axios/index';
+import { useNavigate } from '../../../../node_modules/react-router-dom/dist/index';
 import {
   Button,
   Checkbox,
@@ -33,7 +36,7 @@ import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 
 const AuthLogin = () => {
   const [checked, setChecked] = React.useState(false);
-
+  let Navigate = useNavigate()
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -42,9 +45,13 @@ const AuthLogin = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-
+  if(localStorage.getItem('token')){
+    console.log(localStorage.getItem('token'))
+    Navigate('/dashboard')
+  }
+  
   return (
-    <>
+    <>  
       <Formik
         initialValues={{
           email: 'info@codedthemes.com',
@@ -57,6 +64,17 @@ const AuthLogin = () => {
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
+            console.log("values ===> ",values)
+            let logInData = await axios.post('https://machanicalcalculator.microlent.com/api/user/login', values )
+            logInData = logInData.data
+            let response = logInData.data
+            if(logInData.statusCode == 200){
+              localStorage.setItem('token' ,response.token )
+              Navigate('/')
+            }else{
+              Navigate('/')
+            }
+            console.log(logInData)
             setStatus({ success: false });
             setSubmitting(false);
           } catch (err) {
