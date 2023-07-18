@@ -6,7 +6,7 @@ import { Box,  useMediaQuery } from '@mui/material';
 //import Search from './Search';
 import Profile from './Profile';
 //import Notification from './Notification';
-import MobileSection from './MobileSection';
+// import MobileSection from './MobileSection';
 
 // ==============================|| HEADER - CONTENT ||============================== //
 
@@ -14,13 +14,14 @@ const HeaderContent = () => {
   const matchesXs = useMediaQuery((theme) => theme.breakpoints.down('md'));
 
   return (
-    <>
+    <div style={{width: "100%",
+      display: "flex",
+      justifyContent: "end"}}>
       
       {matchesXs && <Box sx={{ width: '100%', ml: 1 }} />}
+      <Profile />
       
-      {!matchesXs && <Profile />}
-      {matchesXs && <MobileSection />}
-    </>
+    </div>
   );
 };
 
