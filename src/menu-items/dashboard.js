@@ -40,6 +40,15 @@ const dashboard = {
       icon: icons.ContactsOutlined,
       breadcrumbs: false
       
+    },
+    {
+      id: 'Subscription',
+      title: 'Subscription',
+      type: 'item',
+      url: '/Subscription',
+      icon: icons.ContactsOutlined,
+      breadcrumbs: false
+      
     }
   ]
 };
