@@ -11,6 +11,8 @@ const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
 const SamplePage = Loadable(lazy(() => import('pages/extra-pages/SamplePage')));
 const Pagiantion = Loadable(lazy(() => import('pages/PaginaionTable/Pagiantion')));
 const ContactUs = Loadable(lazy(() => import('pages/ContactUs/ContactUs')));
+const Subscription = Loadable(lazy(() => import('pages/SubscriptionTable/Subscription')));
+
 
 // render - utilities
 const Typography = Loadable(lazy(() => import('pages/components-overview/Typography')));
@@ -64,6 +66,10 @@ const MainRoutes = {
     {
       path : 'ContactUs',   
       element : <ContactUs/>
+    },
+    {
+      path : 'Subscription',   
+      element : <Subscription/>
     },
   ]
 };
