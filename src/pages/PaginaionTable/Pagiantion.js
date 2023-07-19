@@ -74,10 +74,21 @@ const setuserList = async ()=>{
   Navigate('/login')
  } 
 }
-
+React.useEffect(() => {
+  const user = localStorage.getItem("user");
+  console.log(" user from useEffect " , user )
+  if(user == null ){
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Something went wrong!',
+      footer: '<a href="">Why do I have this issue?</a>'
+    })
+    return window.location.href = "/login"
+  }
+}, []);
 React.useEffect(  ()=>{
   setuserList()
-
   },[])
 
 React.useEffect(()=>{})

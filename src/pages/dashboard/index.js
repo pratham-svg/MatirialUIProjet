@@ -33,6 +33,7 @@ import avatar1 from 'assets/images/users/avatar-1.png';
 import avatar2 from 'assets/images/users/avatar-2.png';
 import avatar3 from 'assets/images/users/avatar-3.png';
 import avatar4 from 'assets/images/users/avatar-4.png';
+import { useSelector  } from 'react-redux';
 
 // avatar style
 const avatarSX = {
@@ -72,7 +73,8 @@ const status = [
 const DashboardDefault = () => {
   const [value, setValue] = useState('today');
   const [slot, setSlot] = useState('week');
-
+  const userData = useSelector((value)=> value.User)
+  console.log("this is the user data  " , userData)
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
       {/* row 1 */}
