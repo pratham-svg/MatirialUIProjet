@@ -3,13 +3,13 @@ import { Link as RouterLink } from 'react-router-dom';
 // import Box from '@mui/material/Box';
 // import LinearProgress from '@mui/material/LinearProgress';
 // material-ui
+import { logIn } from 'store/reducers/User';
 import axios from '../../../../node_modules/axios/index';
 import { useNavigate } from '../../../../node_modules/react-router-dom/dist/index';
+import { useAuth } from 'AuthContext/AuthContext';
 import {
   Button,
-  Checkbox,
  // Divider,
-  FormControlLabel,
   FormHelperText,
   Grid,
   Link,
@@ -18,13 +18,12 @@ import {
   InputLabel,
   OutlinedInput,
   Stack,
-  Typography
 } from '@mui/material';
-
+import Swal from 'sweetalert2'; // Import SweetAlert
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-
+import { useDispatch  } from 'react-redux';
 // project import
 //import FirebaseSocial from './FirebaseSocial';
 import AnimateButton from 'components/@extended/AnimateButton';
@@ -35,13 +34,14 @@ import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 // ============================|| FIREBASE - LOGIN ||============================ //
 
 const AuthLogin = () => {
-  const [checked, setChecked] = React.useState(false);
+  // const [checked, setChecked] = React.useState(false);
   let Navigate = useNavigate()
   const [showPassword, setShowPassword] = React.useState(false);
+  const {  login } = useAuth();
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
-
+  let dispatch = useDispatch()
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -51,11 +51,11 @@ const AuthLogin = () => {
   }
   
   return (
-    <>  
+    <div>  
       <Formik
         initialValues={{
-          email: 'info@codedthemes.com',
-          password: '123456',
+          email: '',
+          password: '',
           submit: null
         }}
         validationSchema={Yup.object().shape({
@@ -64,17 +64,28 @@ const AuthLogin = () => {
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            console.log("values ===> ",values)
             let logInData = await axios.post('https://machanicalcalculator.microlent.com/api/user/login', values )
             logInData = logInData.data
             let response = logInData.data
+            console.log("response===> "  , response)
             if(logInData.statusCode == 200){
+              await dispatch(logIn(response))
+              login(response)
+              Swal.fire(
+                'Success',
+                'Admin Login Successfully  ',
+                'success'
+              )
               localStorage.setItem('token' ,response.token )
               Navigate('/')
             }else{
-              Navigate('/')
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Invalid Credentials!',
+                // footer: '<a href="">Why do I have this issue?</a>'
+              })
             }
-            console.log(logInData)
             setStatus({ success: false });
             setSubmitting(false);
           } catch (err) {
@@ -145,18 +156,6 @@ const AuthLogin = () => {
 
               <Grid item xs={12} sx={{ mt: -1 }}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={checked}
-                        onChange={(event) => setChecked(event.target.checked)}
-                        name="checked"
-                        color="primary"
-                        size="small"
-                      />
-                    }
-                    label={<Typography variant="h6">Keep me sign in</Typography>}
-                  />
                   <Link variant="h6" component={RouterLink} to="" color="text.primary">
                     Forgot Password?
                   </Link>
@@ -180,7 +179,7 @@ const AuthLogin = () => {
           </form>
         )}
       </Formik>
-    </>
+    </div>
   );
 };
 
