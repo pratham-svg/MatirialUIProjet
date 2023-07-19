@@ -58,6 +58,7 @@ const Profile = () => {
 
   const handleLogout = async () => {
     // logout
+    //localStorage.removeItem("user");
   };
 
   const anchorRef = useRef(null);

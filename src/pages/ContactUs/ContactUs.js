@@ -8,45 +8,48 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import axios from '../../../node_modules/axios/index';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import axios from '../../../node_modules/axios/index';
+
+
 
 const columns = [
-  { id: 'firstName', label: 'FirstName', minWidth: 170 },
-  { id: 'role', label: 'Role', minWidth: 100 },
-  {
-    id: 'email',
-    label: 'Email',
-    minWidth: 170,
-    align: 'center',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'mobileNo',
-    label: 'MobileNo.',
-    minWidth: 170,
-    align: 'center',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'isActive',
-    label: 'Status',
-    minWidth: 170,
-    align: 'center',
-    format: (value) => value.toLocaleString('en-US')  ,
-  },
-];
+    { id: 'firstName', label: 'FirstName', minWidth: 170 },
+    { id: 'lastName', label: 'LastName', minWidth: 100 },
+    {
+      id: 'email',
+      label: 'Email',
+      minWidth: 170,
+      align: 'center',
+      format: (value) => value.toLocaleString('en-US'),
+    },
+    {
+      id: 'subject',
+      label: 'subject',
+      minWidth: 170,
+      align: 'center',
+      format: (value) => value.toLocaleString('en-US'),
+    },
+    {
+      id: 'message',
+      label: 'Message',
+      minWidth: 170,
+      align: 'center',
+      format: (value) => value.toLocaleString('en-US')  ,
+    },
+  ];
 
+const ContactUs = () => {
 
-
-const Pagiantion = () => {const [page, setPage] = React.useState(0);
+    const [page, setPage] = React.useState(0);
 const [rowsPerPage, setRowsPerPage] = React.useState(10);
 const [ UserData , SetUserData ] = React.useState([])
 
 const setuserList = async ()=>{
-  let UserList = await axios.get('https://machanicalcalculator.microlent.com/api/user/get-All' ,{ headers: { 'authorization':`bearer ${localStorage.getItem("token")}` } } )
-  await  SetUserData(UserList?.data?.data)
+  let UserList = await axios.get('https://machanicalcalculator.microlent.com/api/contact/getAll' ,{ headers: { 'authorization':`bearer ${localStorage.getItem("token")}` } } )
+  console.log("UserList===> " , UserList?.data?.data?.data)
+  await  SetUserData(UserList?.data?.data?.data)
 }
 
 React.useEffect(  ()=>{
@@ -65,12 +68,12 @@ const handleChangeRowsPerPage = (event) => {
 };
 
 
-return (
-  <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+  return (
+    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
     <TableContainer sx={{ maxHeight: 440 }}>
       <Table stickyHeader aria-label="sticky table">
         <TableHead>
-         {UserData.length == 0 ?  <Box sx={{   align: 'center'
+         {UserData.length == 0 ?  <Box sx={{ display: 'flex',
         
          }}>
       <CircularProgress />
@@ -118,5 +121,7 @@ return (
       onRowsPerPageChange={handleChangeRowsPerPage}
     />
   </Paper>
-);}
-export default Pagiantion
+  )
+}
+
+export default ContactUs
