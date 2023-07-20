@@ -47,9 +47,10 @@ const MainLayout = () => {
   }, [drawerOpen]);
 
   useEffect(() => {
-    if (!user) {
-      return window.location.replace('/login'); 
-    }
+    console.log(user);
+    // if (!user) {
+    //   return window.location.replace('login');
+    // }
   }, []);
 
   return (

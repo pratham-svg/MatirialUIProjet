@@ -10,6 +10,11 @@ const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
 const Pagiantion = Loadable(lazy(() => import('pages/PaginaionTable/Pagiantion')));
 const ContactUs = Loadable(lazy(() => import('pages/ContactUs/ContactUs')));
 const Subscription = Loadable(lazy(() => import('pages/SubscriptionTable/Subscription')));
+const CreateSubscription = Loadable(lazy(() => import('pages/Subscription/CreateSubscription')));
+const SubscriptionList = Loadable(lazy(() => import('pages/Subscription/SubscriptionList')));
+
+
+
 
 // render - utilities
 
@@ -34,7 +39,16 @@ const MainRoutes = {
     {
       path: 'Subscription',
       element: <Subscription />
+    },
+    {
+      path: 'CreateSubscription',
+      element: <CreateSubscription />
+    },
+    {
+      path: 'SubscriptionList',
+      element: <SubscriptionList />
     }
+
   ]
 };
 
