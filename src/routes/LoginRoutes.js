@@ -8,6 +8,8 @@ import MinimalLayout from 'layout/MinimalLayout';
 const AuthLogin = Loadable(lazy(() => import('pages/authentication/Login')));
 const AuthRegister = Loadable(lazy(() => import('pages/authentication/Register')));
 const ForgetPassword = Loadable(lazy(() => import('pages/authentication/ForgetPassword')));
+const OtpVerification = Loadable(lazy(() => import('pages/authentication/OtpVerification')));
+const ResetPassword = Loadable(lazy(() => import('./../pages/authentication/ResetPassword')));
 
 
 
@@ -29,6 +31,14 @@ const LoginRoutes = {
     {
       path: 'forgetPassword',
       element: <ForgetPassword />
+    },
+    {
+      path: 'otpVerification',
+      element: <OtpVerification />
+    },
+    {
+      path: 'ResetPassword',
+      element: <ResetPassword />
     }
   ]
 };
