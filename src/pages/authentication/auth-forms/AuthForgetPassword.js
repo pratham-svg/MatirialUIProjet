@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+// import { Link as RouterLink } from 'react-router-dom';
 // import Box from '@mui/material/Box';
 // import LinearProgress from '@mui/material/LinearProgress';
 // material-ui
@@ -7,12 +7,13 @@ import { Link as RouterLink } from 'react-router-dom';
 // import axios from '../../../../node_modules/axios/index';
 import { useNavigate } from '../../../../node_modules/react-router-dom/dist/index';
 // import { useAuth } from 'AuthContext/AuthContext';
+import { useDispatch } from 'react-redux';
+import { SaveEmail } from 'store/reducers/UserEmail';
 import {
   Button,
  // Divider,
   FormHelperText,
   Grid,
-  Link,
   InputLabel,
   OutlinedInput,
   Stack,
@@ -25,27 +26,31 @@ import { Formik } from 'formik';
 // project import
 //import FirebaseSocial from './FirebaseSocial';
 import AnimateButton from 'components/@extended/AnimateButton';
-
+import { Box, CircularProgress } from '../../../../node_modules/@mui/material/index';
+import axios from '../../../../node_modules/axios/index';
+import { API_URL } from 'Services/Service';
 // assets
 // import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
+import Swal from 'sweetalert2';
 
 const AuthForgetPassword = () => {
-   // const [checked, setChecked] = React.useState(false);
+
    let Navigate = useNavigate()
-//    const [showPassword, setShowPassword] = React.useState(false);
-//    const {  login } = useAuth();
-//    const handleClickShowPassword = () => {
-//      setShowPassword(!showPassword);
-//    };
-//    let dispatch = useDispatch()
-//    const handleMouseDownPassword = (event) => {
-//      event.preventDefault();
-//    };
+   const dispatch = useDispatch()
    if(localStorage.getItem('token')){
      console.log(localStorage.getItem('token'))
-     Navigate('/dashboard')
-     
+     Navigate('/dashboard') 
    }
+   const [ loading , SetLoading ] = useState(false)
+
+   useEffect(() => {
+    if(loading){
+      return<Box  sx= {{display: 'flex', justifyContent: 'center' ,  alignItems: 'center',   height: '80vh' }} >
+      <CircularProgress />
+      </Box> 
+     }
+  }, []);
+
    
    return (
      <div>  
@@ -59,14 +64,42 @@ const AuthForgetPassword = () => {
          })}
          onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
             try {
-                console.log("values ===> " , values)
+                SetLoading(true)
+                dispatch(SaveEmail(values))
+                localStorage.setItem('email',values.email)
+                let Userdata = await axios.post(`${API_URL}/user/forget-password`+`?email=${values.email}` , )
+                let response = Userdata.data
+                console.log("response===> " , response)
+                if(response.statusCode == 200 ){
+                  Swal.fire(
+                    'Success',
+                    'OTP on mail.',
+                    'success'
+                  )
+                  Navigate('/otpVerification')
+                }
+                if(response.statusCode == 203 ){
+                  Swal.fire(
+                    'Success',
+                      `${response.message}`,
+                    'error'
+                  )
+                  Navigate('/forgetPassword')
+                }
                 setStatus({ success: false });
                 setSubmitting(false);
+                SetLoading(false)
+               
               } catch (err) {
-                console.error(err);
+                Swal.fire(
+                  'Success',
+                  `somthing went wrong`,
+                  'error'
+                )
                 setStatus({ success: false });
                 setErrors({ submit: err.message });
-                setSubmitting(false);
+                SetLoading(false)
+                Navigate('/forgetPassword')
               }
          }}
        >
@@ -95,13 +128,6 @@ const AuthForgetPassword = () => {
                  </Stack>
                </Grid>
             
-               <Grid item xs={12} sx={{ mt: -1 }}>
-                 <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-                   <Link variant="h6" component={RouterLink} to="" color="text.primary">
-                     Forgot Password?
-                   </Link>
-                 </Stack>
-               </Grid>
                {errors.submit && (
                  <Grid item xs={12}>
                    <FormHelperText error>{errors.submit}</FormHelperText>
@@ -110,7 +136,7 @@ const AuthForgetPassword = () => {
                <Grid item xs={12}>
                  <AnimateButton>
                    <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="primary">
-                     Login
+                     Send Otp
                    </Button>
                  </AnimateButton>
                </Grid>
