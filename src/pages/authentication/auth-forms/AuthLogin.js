@@ -45,11 +45,7 @@ const AuthLogin = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  if(localStorage.getItem('token')){
-    console.log(localStorage.getItem('token'))
-    Navigate('/dashboard')
-    
-  }
+
   
   return (
     <div>  

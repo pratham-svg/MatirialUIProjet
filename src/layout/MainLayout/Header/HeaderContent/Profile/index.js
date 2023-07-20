@@ -23,9 +23,8 @@ import {
 import MainCard from 'components/MainCard';
 import Transitions from 'components/@extended/Transitions';
 import ProfileTab from './ProfileTab';
-import SettingTab from './SettingTab';
 // assets
-import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import { deepOrange } from '@mui/material/colors';
 import { useNavigate } from '../../../../../../node_modules/react-router-dom/dist/index';
 // tab panel wrapper
@@ -171,26 +170,13 @@ const Profile = () => {
                               label="Profile"
                               {...a11yProps(0)}
                             />
-                            <Tab
-                              sx={{
-                                display: 'flex',
-                                flexDirection: 'row',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                textTransform: 'capitalize'
-                              }}
-                              icon={<SettingOutlined style={{ marginBottom: 0, marginRight: '10px' }} />}
-                              label="Setting"
-                              {...a11yProps(1)}
-                            />
+                       
                           </Tabs>
                         </Box>
                         <TabPanel value={value} index={0} dir={theme.direction}>
                           <ProfileTab handleLogout={handleLogout} />
                         </TabPanel>
-                        <TabPanel value={value} index={1} dir={theme.direction}>
-                          <SettingTab />
-                        </TabPanel>
+                       
                       </>
                     )}
                   </MainCard>
