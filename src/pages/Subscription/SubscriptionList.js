@@ -10,6 +10,9 @@ import TableRow from '@mui/material/TableRow';
 import axios from '../../../node_modules/axios/index';
 import CircularProgress from '@mui/material/CircularProgress';
  import Box from '@mui/material/Box';
+ import DeleteIcon from '@mui/icons-material/Delete';
+ import EditIcon from '@mui/icons-material/Edit';
+ import { Button } from '../../../node_modules/@mui/material/index';
 
 import Swal from 'sweetalert2';
 
@@ -151,6 +154,11 @@ function SubscriptionList() {
                       <TableCell  align={"center"}>
                            {row.amount}
                            </TableCell>
+
+                           <Button onClick={()=> { console.log("row.id" , row.id )}} ><EditIcon/></Button>    
+
+
+                     <Button><DeleteIcon/></Button>    
                      
                     </TableRow>
                   );
