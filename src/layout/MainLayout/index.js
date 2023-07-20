@@ -14,6 +14,7 @@ import Breadcrumbs from 'components/@extended/Breadcrumbs';
 
 // types
 import { openDrawer } from 'store/reducers/menu';
+import { useAuth } from 'AuthContext/AuthContext';
 
 // ==============================|| MAIN LAYOUT ||============================== //
 
@@ -21,6 +22,7 @@ const MainLayout = () => {
   const theme = useTheme();
   const matchDownLG = useMediaQuery(theme.breakpoints.down('lg'));
   const dispatch = useDispatch();
+  const { user } = useAuth();
 
   const { drawerOpen } = useSelector((state) => state.menu);
 
@@ -43,6 +45,12 @@ const MainLayout = () => {
     if (open !== drawerOpen) setOpen(drawerOpen);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [drawerOpen]);
+
+  useEffect(() => {
+    if (!user) {
+      return window.location.replace('/login'); 
+    }
+  }, []);
 
   return (
     <Box sx={{ display: 'flex', width: '100%' }}>

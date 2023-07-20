@@ -13,7 +13,7 @@ import CircularProgress from '@mui/material/CircularProgress';
  import Box from '@mui/material/Box';
 
 import Swal from 'sweetalert2';
-import { useNavigate } from '../../../node_modules/react-router-dom/dist/index';
+// import { useNavigate } from '../../../node_modules/react-router-dom/dist/index';
 
 const columns = [
     {
@@ -50,47 +50,50 @@ const columns = [
 function Subscription() {
     const [page, setPage] = React.useState(0);
 const [rowsPerPage, setRowsPerPage] = React.useState(10);
-const [ UserData , SetUserData ] = React.useState([]);
+const [ subscriptionList , setSubscriptionList ] = React.useState([]);
 const [loading,setLoading] = React.useState(false)
-const Navigate = useNavigate()
+// const Navigate = useNavigate()
 
-const setuserList = async ()=>{
-    try{
-        setLoading(true)
-  let UserList = await axios.get('https://machanicalcalculator.microlent.com/api/subscription/getAll' ,{ headers: { 'authorization':`bearer ${localStorage.getItem("token")}` } } )
-  await  SetUserData(UserList?.data?.data)
-  let UserListData = UserList?.data
-  console.log("UserListData===> " , UserListData)
-  if(UserListData.statusCode == 401 ){
-    Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: 'Something went wrong!',
-    })
-    setLoading(false)
-  //  Navigate('/login')
+const fetchUserList = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        'https://machanicalcalculator.microlent.com/api/user-subscription/getAll',
+        { headers: { 'authorization': `bearer ${localStorage.getItem("token")}` } }
+      );
 
-    // Navigate('/login')
-  }
- }catch(err){
-  Swal.fire({
-    icon: 'error',
-    title: 'Oops...',
-    text: 'Something went wrong!',
-  })
-  setLoading(false)
-  Navigate('/login')
- } 
-}
+      const { data,message, statusCode } = response.data;
+
+      if(statusCode==200){
+        setSubscriptionList(data)
+      }else{
+        Swal.fire({
+            title:"error",
+            text:message
+        })
+      }
+
+      setLoading(false);
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      });
+      setLoading(false);
+      // Navigate('/login'); // Consider whether you want to redirect to login on error or not.
+    }
+  };
+
+ 
   
 
 
 React.useEffect(  ()=>{
-  setuserList()
+    fetchUserList();
 
   },[])
 
-React.useEffect(()=>{})
 const handleChangePage = (event, newPage) => {
   setPage(newPage);
 };
@@ -116,7 +119,7 @@ if(loading){
     <TableContainer sx={{ maxHeight: 440 }}>
       <Table stickyHeader aria-label="sticky table">
         <TableHead>
-      :  <TableRow>
+        <TableRow>
             {columns.map((column) => (
               <TableCell
                 key={column.id}
@@ -129,21 +132,23 @@ if(loading){
           </TableRow>
         </TableHead>
         <TableBody>
-          {UserData
+          {subscriptionList
             ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((row) => {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                  {columns.map((column) => {
-                    const value = row[column.id];
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number'
-                          ? column.format(value)
-                          : value}
-                      </TableCell>
-                    );
-                  })}
+                                    <TableCell  align={"center"}>
+                       {row.amount}
+                       </TableCell>
+                  <TableCell  align={"center"}>
+                       {row.isYearly?"true":"false"}
+                       </TableCell>
+                  <TableCell  align={"center"}>
+                       {row.subscriptionDate}
+                       </TableCell>
+                  <TableCell  align={"center"}>
+                       {row.expiryDate}
+                       </TableCell>
                 </TableRow>
               );
             })}
@@ -153,7 +158,7 @@ if(loading){
     <TablePagination
       rowsPerPageOptions={[5, 10, 15]}
       component="div"
-      count={UserData.length}
+      count={subscriptionList.length}
       rowsPerPage={rowsPerPage}
       page={page}
       onPageChange={handleChangePage}

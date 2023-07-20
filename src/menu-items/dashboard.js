@@ -43,7 +43,7 @@ const dashboard = {
     },
     {
       id: 'Subscription',
-      title: 'Subscription',
+      title: 'User Subscription',
       type: 'item',
       url: '/Subscription',
       icon: icons.ContactsOutlined,
