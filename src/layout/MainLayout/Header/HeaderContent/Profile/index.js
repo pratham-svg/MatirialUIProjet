@@ -19,16 +19,15 @@ import {
   Typography
 } from '@mui/material';
 // import { useNavigate } from '../../../../../../node_modules/react-router-dom/dist/index';
-import Swal from 'sweetalert2';
 // project import
 import MainCard from 'components/MainCard';
 import Transitions from 'components/@extended/Transitions';
 import ProfileTab from './ProfileTab';
 import SettingTab from './SettingTab';
-import { useEffect } from 'react';
 // assets
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { deepOrange } from '@mui/material/colors';
+import { useNavigate } from '../../../../../../node_modules/react-router-dom/dist/index';
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
   return (
@@ -55,28 +54,12 @@ function a11yProps(index) {
 
 const Profile = () => {
   const theme = useTheme();
-  const { user , logout } = useAuth()
-  // const Navigate = useNavigate()
+  const { user, logout } = useAuth();
+  const Navigate = useNavigate();
   const handleLogout = async () => {
-     logout()
-     window.location.reload();
-    // logout
-    //localStorage.removeItem("user");
+    logout();
+    Navigate('/login');
   };
-  useEffect(() => {
-    const user = localStorage.getItem("user");
-    console.log(" user from useEffect " , user )
-    if(user == null ){
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Something went wrong!',
-        footer: '<a href="">Why do I have this issue?</a>'
-      })
-      return window.location.href = "/login"
-    }
- }, []);
-  console.log('this user is from profile ' , user )
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
   const handleToggle = () => {
@@ -89,7 +72,7 @@ const Profile = () => {
     }
     setOpen(false);
   };
-  
+
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -114,8 +97,8 @@ const Profile = () => {
         onClick={handleToggle}
       >
         <Stack direction="row" spacing={2} alignItems="center" sx={{ p: 0.5 }}>
-        <Avatar sx={{ bgcolor: deepOrange[500] }}>{user ? user.name[0] : null }</Avatar>
-          <Typography variant="subtitle1">{user ? user.name : null }</Typography>
+          <Avatar sx={{ bgcolor: deepOrange[500] }}>{user ? user.name[0] : null}</Avatar>
+          <Typography variant="subtitle1">{user ? user.name : null}</Typography>
         </Stack>
       </ButtonBase>
       <Popper
@@ -156,9 +139,9 @@ const Profile = () => {
                       <Grid container justifyContent="space-between" alignItems="center">
                         <Grid item>
                           <Stack direction="row" spacing={1.25} alignItems="center">
-                          <Avatar sx={{ bgcolor: deepOrange[500] }}>{user ? user.name[0] : null }</Avatar>
+                            <Avatar sx={{ bgcolor: deepOrange[500] }}>{user ? user.name[0] : null}</Avatar>
                             <Stack>
-                              <Typography variant="h6">{user ? user.name : null }</Typography>
+                              <Typography variant="h6">{user ? user.name : null}</Typography>
                               <Typography variant="body2" color="textSecondary">
                                 UI/UX Designer
                               </Typography>
