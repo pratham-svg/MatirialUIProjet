@@ -39,7 +39,7 @@ const AuthForgetPassword = () => {
    const dispatch = useDispatch()
    if(localStorage.getItem('token')){
      console.log(localStorage.getItem('token'))
-     Navigate('/dashboard') 
+     Navigate('/admin') 
    }
    const [ loading , SetLoading ] = useState(false)
 

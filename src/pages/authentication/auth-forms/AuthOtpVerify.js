@@ -36,7 +36,7 @@ const AuthOtpVerify = () => {
     let Navigate = useNavigate()
     if(localStorage.getItem('token')){
       console.log(localStorage.getItem('token'))
-      Navigate('/dashboard') 
+      Navigate('/admin') 
     }
     const [ loading , SetLoading ] = useState(false)
     
@@ -73,7 +73,7 @@ const AuthOtpVerify = () => {
                      'otp verified successfully ',
                      'success'
                    )
-                   Navigate('/login')
+                   Navigate('/ResetPassword')
                  }
                  if(response.statusCode == 400 ){
                    Swal.fire(
