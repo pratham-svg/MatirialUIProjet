@@ -12,6 +12,9 @@ const ContactUs = Loadable(lazy(() => import('pages/ContactUs/ContactUs')));
 const Subscription = Loadable(lazy(() => import('pages/SubscriptionTable/Subscription')));
 const CreateSubscription = Loadable(lazy(() => import('pages/Subscription/CreateSubscription')));
 const SubscriptionList = Loadable(lazy(() => import('pages/Subscription/SubscriptionList')));
+const UpdateSubscription = Loadable(lazy(() => import('pages/Subscription/UpdateSubscription')));
+
+
 
 
 
@@ -47,7 +50,12 @@ const MainRoutes = {
     {
       path: 'SubscriptionList',
       element: <SubscriptionList />
-    }
+    },
+    {
+      path: 'UpdateSubscription/:id',
+      element: <UpdateSubscription />
+    },
+    
 
   ]
 };

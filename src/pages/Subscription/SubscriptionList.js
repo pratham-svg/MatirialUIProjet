@@ -12,9 +12,19 @@ import CircularProgress from '@mui/material/CircularProgress';
  import Box from '@mui/material/Box';
  import DeleteIcon from '@mui/icons-material/Delete';
  import EditIcon from '@mui/icons-material/Edit';
- import { Button } from '../../../node_modules/@mui/material/index';
+ 
+ import {  Button } from '@mui/material';
+ import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select'
+
+
+
 
 import Swal from 'sweetalert2';
+import { API_URL } from 'Services/Service';
+import { useNavigate } from '../../../node_modules/react-router-dom/dist/index';
 
 const columns = [
     {
@@ -57,6 +67,11 @@ function SubscriptionList() {
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [ subscriptionList , setSubscriptionList ] = React.useState([]);
     const [loading,setLoading] = React.useState(false)
+    const [duration, setDuration] = React.useState('');
+    const [amount, setAmount] = React.useState('');
+    const navigate= useNavigate()
+
+
     // const Navigate = useNavigate()
     
     const fetchUserList = async () => {
@@ -108,17 +123,99 @@ function SubscriptionList() {
       setPage(0);
     };
     
+    const handleClick =()=>{
+      window.location.href = '/admin/createSubscription';
+
+    }
+    const deleteSubscription = async (id)=>{
+
+      
+
+      try{
+       setLoading(true);
+       
+       let data = await axios.get(`${API_URL}/subscription/delete/${id}`,
+       { headers: { 'authorization': `bearer ${localStorage.getItem("token")}` } })
+       let resposne = data.data
+       if(resposne.statusCode == 200){
+        fetchUserList();
+         Swal.fire(
+           'success',
+           'Subscription Deleted Successfully',
+           'success'
+         )
+       }
+       setLoading(false);
+      } catch(err){
+       console.log(err.message)
+       Swal.fire(
+         'error',
+         'something went wrong',
+         'error'
+       )
+      }
+     }
+
+    const updateSubsciption= async (id)=> {
+     
+      navigate("/updateSubscription/" + id)
+     
+    
+    }
+
+
     
     if(loading){
          return<Box  sx= {{display: 'flex', justifyContent: 'center' ,  alignItems: 'center',  height: '80vh' }} 
          >
       <CircularProgress />
      </Box> }
+
+
       return (
-    
-    
-       
+      <>
+      <stack  spacing={2} direction="row" style={{marginBottom: 15,display:"flex",justifyContent: 'space-between' }} >
+        <Button variant="contained" onClick={handleClick} >Create subscription</Button>
+        <Box sx={{ }}>
         
+        <FormControl sx={{width:"150px"}}  fullWidth >
+        <InputLabel id="demo-simple-select-label">Duration</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={duration}
+          label="Duration"
+          required
+          onChange={e=>setDuration(e.target.value)}
+        >
+          <MenuItem value={"1-Month"}>1 Month</MenuItem>
+          <MenuItem value={"3-Months"}>3 Months</MenuItem>
+          <MenuItem value={"6-Months"}>6 Months</MenuItem>
+          <MenuItem value={"1-year"}>1 Year</MenuItem>
+        </Select>
+      </FormControl>
+      <FormControl sx={{width:"150px"}}  fullWidth >
+        <InputLabel id="demo-simple-select-label">Amount</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={amount}
+          label="Amount"
+          required
+          onChange={e=>setAmount(e.target.value)}
+        >
+          <MenuItem value={"5000$"}>5000$</MenuItem>
+          <MenuItem value={"10000$"}>10000$</MenuItem>
+          <MenuItem value={"15000$"}>15000$</MenuItem>
+          <MenuItem value={"20000$"}>20000$</MenuItem>
+        </Select>
+      </FormControl>
+        
+        </Box>
+
+
+      </stack>
+    
      <Paper sx={{ width: '100%', overflow: 'hidden' }}>
             
         <TableContainer sx={{ maxHeight: 440 }}>
@@ -155,10 +252,10 @@ function SubscriptionList() {
                            {row.amount}
                            </TableCell>
 
-                           <Button onClick={()=> { console.log("row.id" , row.id )}} ><EditIcon/></Button>    
+                           <Button onClick={() => updateSubsciption(row.id)}  ><EditIcon/></Button>    
 
 
-                     <Button><DeleteIcon/></Button>    
+                     <Button  onClick={()=>{deleteSubscription(row.id)}} ><DeleteIcon/></Button>    
                      
                     </TableRow>
                   );
@@ -175,7 +272,7 @@ function SubscriptionList() {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-      </Paper>)
+      </Paper></>)
 }
 
 export default SubscriptionList

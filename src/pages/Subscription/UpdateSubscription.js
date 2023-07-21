@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React from 'react'
 import { TextField, Button, Stack,TextareaAutosize } from '@mui/material';
 //import { Link } from "react-router-dom"
 import Box from '@mui/material/Box';
@@ -9,22 +8,29 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { DeleteOutlineOutlined } from '../../../node_modules/@mui/icons-material/index';
+import { useParams } from 'react-router-dom';
 import { API_URL } from 'Services/Service';
 import axios from '../../../node_modules/axios/index';
 import Swal from 'sweetalert2';
 import CircularProgress from '@mui/material/CircularProgress';
 
 
-function CreateSubscription() {
+
+
+const UpdateSubscription = () => {
     const [duration, setDuration] = React.useState('');
     const [packageName, setPackageName] = React.useState('');
     const [amount, setAmount] = React.useState('');
     const [features, setFeatures] = React.useState([{ value: '' }]);
     const [description, setDescription] = React.useState('');
     const [loading,setLoading] = React.useState(false)
+    const { id } = useParams();
    // const [isValid, setIsValid] = React.useState(true);
+    let UserId = id 
   
-  
+  React.useEffect(() => {
+    userupdatedata();
+  }, []);
 
 
 
@@ -52,17 +58,20 @@ function CreateSubscription() {
     //   const positiveNumberPattern = /^\+?\d+(\.\d+)?$/;  
     // setIsValid(positiveNumberPattern.test(amount));
         //event.preventDefault();
+
         try {
           setLoading(true);
         let data ={
-          "id": 0,
+          "id": Number(UserId),
           "amount": Number(amount),
           "packageName": packageName,
           "features": features,
           "duration": duration,
           "description" :description,
         }
+        console.log('this is the data ' , data )
         let createSubscription = await axios.post(`${API_URL}/subscription/create-update`, data ,  { headers: { 'authorization': `bearer ${localStorage.getItem("token")}` } } )
+        console.log(createSubscription)
         let response=createSubscription.data
         console.log("response===> " , response)
         if(response.statusCode==200){
@@ -99,10 +108,39 @@ function CreateSubscription() {
    <CircularProgress />
   </Box> }
 
+  const userupdatedata= async()=>{
+    try{
+        let userdata= await axios.get(`${API_URL}/subscription/getOne/${id}`, { headers: { 'authorization': `bearer ${localStorage.getItem("token")}` } } )
+      console.log(userdata.data)
+      const subscriptionData =userdata.data.data;
+      setPackageName(subscriptionData.packageName)
+      setAmount(subscriptionData.amount)
+      setDuration(subscriptionData.duration)
+    //   setFeatures(subscriptionData.features)
+      setDescription(subscriptionData.description)
+      console.log(subscriptionData.features)
+
+
+
+            // Navigate('/logi
+    }
+    catch(error){
+        console.log(error)
+
+    }
+
+  }
+
+
     
 
+
+
+
   return (
-     <React.Fragment  >
+    <div>
+        
+        <React.Fragment  >
         <div style={{display:"flex",justifyContent: 'center' ,  alignItems: 'center' , margin:"auto"}} >
         
     
@@ -193,7 +231,7 @@ function CreateSubscription() {
         <div style={{display:"flex",justifyContent:"space-between"}} >
           <Button variant="outlined" color="primary" type="submit" onClick={AddFeatures} ><AddCircleIcon/>Features </Button>
 
-          <Button variant="outlined" color="primary" type="submit">Submit</Button>
+          <Button variant="outlined" color="primary" type="submit">Update</Button>
         </div>
       
 
@@ -201,7 +239,10 @@ function CreateSubscription() {
  {/* <small>Already have an account? <Link to="/login">Login Here</Link></small> */}
  </div>
 </React.Fragment>
+
+
+    </div>
   )
 }
 
-export default CreateSubscription
+export default UpdateSubscription

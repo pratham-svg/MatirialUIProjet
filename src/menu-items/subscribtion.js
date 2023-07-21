@@ -11,14 +11,7 @@ const icons = {
     title: 'Subscription',
     type: 'group',
     children: [
-      {
-        id: 'createSubscription',
-        title: 'Create Subscription',
-        type: 'item',
-        url: '/createSubscription',
-        icon: icons.DashboardOutlined,
-        breadcrumbs: false
-      },
+      
       {
         id: 'SubscriptionList',
         title: 'Subscription List',
