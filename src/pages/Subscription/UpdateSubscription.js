@@ -50,6 +50,7 @@ const UpdateSubscription = () => {
       updatedFields.splice(index, 1);
       setFeatures(updatedFields);
     };
+    
   
 
 
@@ -117,9 +118,12 @@ const UpdateSubscription = () => {
       setAmount(subscriptionData.amount)
       setDuration(subscriptionData.duration)
     //   setFeatures(subscriptionData.features)
+    const extractedArray = JSON.parse(subscriptionData.features);
+      console.log("extractedArray===> " ,extractedArray)
       setDescription(subscriptionData.description)
       console.log(subscriptionData.features)
-
+      setFeatures(extractedArray)
+      
 
 
             // Navigate('/logi
@@ -217,7 +221,7 @@ const UpdateSubscription = () => {
             color='secondary'
             label="Features"
             onChange={e => handleSubmitf(index,e.target.value)}
-            value={field.value}
+            value={field}
             
             fullWidth
             required

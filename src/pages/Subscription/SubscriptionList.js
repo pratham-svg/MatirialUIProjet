@@ -128,9 +128,6 @@ function SubscriptionList() {
 
     }
     const deleteSubscription = async (id)=>{
-
-      
-
       try{
        setLoading(true);
        
