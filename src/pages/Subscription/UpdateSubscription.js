@@ -25,13 +25,27 @@ const UpdateSubscription = () => {
     const [description, setDescription] = React.useState('');
     const [loading,setLoading] = React.useState(false)
     const { id } = useParams();
+    
+    const { user } = useAuth();
+
+  const isLoggedIn = !!user;
+
    // const [isValid, setIsValid] = React.useState(true);
     let UserId = id 
-  
-  React.useEffect(() => {
-    userupdatedata();
-  }, []);
 
+
+
+    
+  useEffect(() => {
+    // Check if the user is not logged in
+    if (!isLoggedIn) {
+      // Redirect to the login page
+      window.location.href = '/admin/login'; // Replace '/login' with the actual login page path
+    }
+    userupdatedata();
+  }, [isLoggedIn])
+  
+ 
 
 
 
@@ -143,8 +157,11 @@ const UpdateSubscription = () => {
 
   return (
     <div>
-        
-        <React.Fragment  >
+      
+     <React.Fragment  >
+
+
+       
         <div style={{display:"flex",justifyContent: 'center' ,  alignItems: 'center' , margin:"auto"}} >
         
     

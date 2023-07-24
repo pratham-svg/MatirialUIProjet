@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React  , {useEffect}   from 'react';
 import { TextField, Button, Stack,TextareaAutosize } from '@mui/material';
 //import { Link } from "react-router-dom"
 import Box from '@mui/material/Box';
@@ -13,6 +13,7 @@ import { API_URL } from 'Services/Service';
 import axios from '../../../node_modules/axios/index';
 import Swal from 'sweetalert2';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useAuth } from 'AuthContext/AuthContext';
 
 
 function CreateSubscription() {
@@ -23,6 +24,20 @@ function CreateSubscription() {
     const [description, setDescription] = React.useState('');
     const [loading,setLoading] = React.useState(false)
    // const [isValid, setIsValid] = React.useState(true);
+   const { user } = useAuth();
+
+   const isLoggedIn = !!user;
+
+   
+   useEffect(() => {
+    // Check if the user is not logged in
+    if (!isLoggedIn) {
+      // Redirect to the login page
+      window.location.href = '/admin/login'; // Replace '/login' with the actual login page path
+    }
+  
+  }, [isLoggedIn])
+ 
   
   
 
@@ -98,6 +113,8 @@ function CreateSubscription() {
       >
    <CircularProgress />
   </Box> }
+
+
 
     
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 
 // material-ui
 import {
@@ -33,6 +33,7 @@ import avatar1 from 'assets/images/users/avatar-1.png';
 import avatar2 from 'assets/images/users/avatar-2.png';
 import avatar3 from 'assets/images/users/avatar-3.png';
 import avatar4 from 'assets/images/users/avatar-4.png';
+import { useAuth } from 'AuthContext/AuthContext';
 
 // avatar style
 const avatarSX = {
@@ -72,6 +73,24 @@ const status = [
 const DashboardDefault = () => {
   const [value, setValue] = useState('today');
   const [slot, setSlot] = useState('week');
+
+
+  const { user } = useAuth(); 
+  const isLoggedIn = !!user;
+  
+  useEffect(() => {
+    // Check if the user is not logged in
+    if (!isLoggedIn) {
+      // Redirect to the login page
+      window.location.href = '/admin/login'; // Replace '/login' with the actual login page path
+    }
+  }, [isLoggedIn])
+
+
+
+
+
+
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
       {/* row 1 */}

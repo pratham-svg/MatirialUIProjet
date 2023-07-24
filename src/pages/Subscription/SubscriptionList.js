@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -18,6 +17,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select'
+import { useAuth } from 'AuthContext/AuthContext';
+import React  , {useEffect}   from 'react';
 
 
 
@@ -72,6 +73,13 @@ function SubscriptionList() {
     const navigate= useNavigate()
 
 
+    const { user } = useAuth();
+
+  const isLoggedIn = !!user;
+
+
+
+
     // const Navigate = useNavigate()
     
     const fetchUserList = async () => {
@@ -105,14 +113,14 @@ function SubscriptionList() {
         }
       };
     
-     
-      
-    
-    
-    React.useEffect(  ()=>{
+      useEffect(() => {
+        // Check if the user is not logged in
+        if (!isLoggedIn) {
+          // Redirect to the login page
+          window.location.href = '/admin/login'; // Replace '/login' with the actual login page path
+        }
         fetchUserList();
-    
-      },[])
+      }, [isLoggedIn])
     
     const handleChangePage = (event, newPage) => {
       setPage(newPage);
@@ -166,7 +174,11 @@ function SubscriptionList() {
          return<Box  sx= {{display: 'flex', justifyContent: 'center' ,  alignItems: 'center',  height: '80vh' }} 
          >
       <CircularProgress />
-     </Box> }
+     </Box> }   
+      
+
+
+
 
 
       return (

@@ -1,5 +1,5 @@
 
-import * as React from 'react';
+import React  , {useEffect}   from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -11,6 +11,12 @@ import TableRow from '@mui/material/TableRow';
 import axios from '../../../node_modules/axios/index';
 import CircularProgress from '@mui/material/CircularProgress';
  import Box from '@mui/material/Box';
+ import InputLabel from '@mui/material/InputLabel';
+ import MenuItem from '@mui/material/MenuItem';
+ import FormControl from '@mui/material/FormControl';
+ import Select from '@mui/material/Select';
+ import { useAuth } from 'AuthContext/AuthContext';
+
 
 import Swal from 'sweetalert2';
 // import { useNavigate } from '../../../node_modules/react-router-dom/dist/index';
@@ -52,17 +58,37 @@ function Subscription() {
 const [rowsPerPage, setRowsPerPage] = React.useState(10);
 const [ subscriptionList , setSubscriptionList ] = React.useState([]);
 const [loading,setLoading] = React.useState(false)
+const [count,setCount]  = React.useState(0)
+
+const { user } = useAuth();
+
+  const isLoggedIn = !!user;
 // const Navigate = useNavigate()
 
 const fetchUserList = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(
-        'https://machanicalcalculator.microlent.com/api/user-subscription/getAll',
+      const response = await axios.post(
+        'https://machanicalcalculator.microlent.com/api/user-subscription/pagination',
+        {
+          curPage: page + 1,
+          perPage: rowsPerPage,
+          sortBy: 'createdAt',
+          direction: 'desc',
+          whereClause: [
+            {
+              key: 'string',
+              value: 'string',
+              operator: 'string'
+            }
+          ]
+        },
+        
         { headers: { 'authorization': `bearer ${localStorage.getItem("token")}` } }
       );
 
       const { data,message, statusCode } = response.data;
+      setCount(data.count)
 
       if(statusCode==200){
         setSubscriptionList(data)
@@ -88,9 +114,18 @@ const fetchUserList = async () => {
  
   
 
+  useEffect(() => {
+    // Check if the user is not logged in
+    if (!isLoggedIn) {
+      // Redirect to the login page
+      window.location.href = '/admin/login'; // Replace '/login' with the actual login page path
+    }
+    fetchUserList();
+  }, [isLoggedIn])
+
 
 React.useEffect(  ()=>{
-    fetchUserList();
+ 
 
   },[])
 
@@ -109,9 +144,48 @@ if(loading){
      >
   <CircularProgress />
  </Box> }
+
+
+
+
   return (
     <div>
-
+ <Box sx={{display:"flex" ,justifyContent:"flex-end" }}>
+        
+        <FormControl sx={{width:"150px"}}  fullWidth >
+        <InputLabel id="demo-simple-select-label">Duration</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={ ""}
+          label=""
+          required
+          onChange={e=>setDuration(e.target.value)}
+        >
+          <MenuItem value={"1-Month"}>1 Month</MenuItem>
+          <MenuItem value={"3-Months"}>3 Months</MenuItem>
+          <MenuItem value={"6-Months"}>6 Months</MenuItem>
+          <MenuItem value={"1-year"}>1 Year</MenuItem>
+        </Select>
+      </FormControl>
+      <FormControl sx={{width:"150px"}}  fullWidth >
+        <InputLabel id="demo-simple-select-label">Amount</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={""}
+          label=" "
+          required
+          onChange={e=>setAmount(e.target.value)}
+        >
+          <MenuItem value={"5000$"}>5000$</MenuItem>
+          <MenuItem value={"10000$"}>10000$</MenuItem>
+          <MenuItem value={"15000$"}>15000$</MenuItem>
+          <MenuItem value={"20000$"}>20000$</MenuItem>
+        </Select>
+      </FormControl>
+        
+        </Box>
    
     
  <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -156,7 +230,7 @@ if(loading){
       </Table>
     </TableContainer>
     <TablePagination
-      rowsPerPageOptions={[5, 10, 15]}
+      rowsPerPageOptions={count}
       component="div"
       count={subscriptionList.length}
       rowsPerPage={rowsPerPage}
