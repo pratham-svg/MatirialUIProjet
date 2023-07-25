@@ -1,5 +1,5 @@
 
-import React  , {useEffect}   from 'react';
+import React  , {useEffect,useState}   from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -11,14 +11,12 @@ import TableRow from '@mui/material/TableRow';
 import axios from '../../../node_modules/axios/index';
 import CircularProgress from '@mui/material/CircularProgress';
  import Box from '@mui/material/Box';
- import InputLabel from '@mui/material/InputLabel';
- import MenuItem from '@mui/material/MenuItem';
- import FormControl from '@mui/material/FormControl';
- import Select from '@mui/material/Select';
- import { useAuth } from 'AuthContext/AuthContext';
+ import { TextField } from '../../../node_modules/@mui/material/index';
+
 
 
 import Swal from 'sweetalert2';
+import WithAuth from 'components/WithAuth';
 // import { useNavigate } from '../../../node_modules/react-router-dom/dist/index';
 
 const columns = [
@@ -53,19 +51,41 @@ const columns = [
     }
   ];
 
+  const useDebounce = (value, delay) => {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+  
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
+  
+      return () => {
+        clearTimeout(timer);
+      };
+    }, [value, delay]);
+  
+    return debouncedValue;
+  };
+
 function Subscription() {
     const [page, setPage] = React.useState(0);
 const [rowsPerPage, setRowsPerPage] = React.useState(10);
 const [ subscriptionList , setSubscriptionList ] = React.useState([]);
 const [loading,setLoading] = React.useState(false)
 const [count,setCount]  = React.useState(0)
+const [search, setSearch] = useState('');
+const debouncedSearch = useDebounce(search, 1000); // Debounce the search query with a delay of 500ms
 
-const { user } = useAuth();
 
-  const isLoggedIn = !!user;
+const handleSearchQueryChange = (event) => {
+  setSearch(event.target.value);
+};
+
+
+
 // const Navigate = useNavigate()
 
-const fetchUserList = async () => {
+const fetchUserList = async (searchQuery) => {
     try {
       setLoading(true);
       const response = await axios.post(
@@ -77,8 +97,8 @@ const fetchUserList = async () => {
           direction: 'desc',
           whereClause: [
             {
-              key: 'string',
-              value: 'string',
+              key: 'all',
+              value: searchQuery,
               operator: 'string'
             }
           ]
@@ -87,19 +107,11 @@ const fetchUserList = async () => {
         { headers: { 'authorization': `bearer ${localStorage.getItem("token")}` } }
       );
 
-      const { data,message, statusCode } = response.data;
+      const { data} = response.data;
       setCount(data.count)
+    setSubscriptionList(data)
+     setLoading(false);
 
-      if(statusCode==200){
-        setSubscriptionList(data)
-      }else{
-        Swal.fire({
-            title:"error",
-            text:message
-        })
-      }
-
-      setLoading(false);
     } catch (error) {
       Swal.fire({
         icon: 'error',
@@ -111,23 +123,12 @@ const fetchUserList = async () => {
     }
   };
 
- 
-  
-
   useEffect(() => {
-    // Check if the user is not logged in
-    if (!isLoggedIn) {
-      // Redirect to the login page
-      window.location.href = '/admin/login'; // Replace '/login' with the actual login page path
-    }
-    fetchUserList();
-  }, [isLoggedIn])
+    fetchUserList(debouncedSearch);
+  }, [page, rowsPerPage, debouncedSearch ])
 
 
-React.useEffect(  ()=>{
- 
 
-  },[])
 
 const handleChangePage = (event, newPage) => {
   setPage(newPage);
@@ -151,45 +152,21 @@ if(loading){
   return (
     <div>
  <Box sx={{display:"flex" ,justifyContent:"flex-end" }}>
-        
-        <FormControl sx={{width:"150px"}}  fullWidth >
-        <InputLabel id="demo-simple-select-label">Duration</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={ ""}
-          label=""
-          required
-          onChange={e=>setDuration(e.target.value)}
-        >
-          <MenuItem value={"1-Month"}>1 Month</MenuItem>
-          <MenuItem value={"3-Months"}>3 Months</MenuItem>
-          <MenuItem value={"6-Months"}>6 Months</MenuItem>
-          <MenuItem value={"1-year"}>1 Year</MenuItem>
-        </Select>
-      </FormControl>
-      <FormControl sx={{width:"150px"}}  fullWidth >
-        <InputLabel id="demo-simple-select-label">Amount</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={""}
-          label=" "
-          required
-          onChange={e=>setAmount(e.target.value)}
-        >
-          <MenuItem value={"5000$"}>5000$</MenuItem>
-          <MenuItem value={"10000$"}>10000$</MenuItem>
-          <MenuItem value={"15000$"}>15000$</MenuItem>
-          <MenuItem value={"20000$"}>20000$</MenuItem>
-        </Select>
-      </FormControl>
+ <TextField
+          id="outlined-basic"
+          label="Search"
+          variant="outlined"
+          value={search}
+          onChange={handleSearchQueryChange}
+        />
         
         </Box>
    
     
  <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-        
+  {subscriptionList.length>0?(
+  <>
+       
     <TableContainer sx={{ maxHeight: 440 }}>
       <Table stickyHeader aria-label="sticky table">
         <TableHead>
@@ -218,10 +195,10 @@ if(loading){
                        {row.isYearly?"true":"false"}
                        </TableCell>
                   <TableCell  align={"center"}>
-                       {row.subscriptionDate}
+                       {row.subscriptionDate?row.subscriptionDate:"-"}
                        </TableCell>
                   <TableCell  align={"center"}>
-                       {row.expiryDate}
+                       {row.expiryDate?row.expiryDate:"-"}
                        </TableCell>
                 </TableRow>
               );
@@ -237,8 +214,13 @@ if(loading){
       page={page}
       onPageChange={handleChangePage}
       onRowsPerPageChange={handleChangeRowsPerPage}
-    />
+  
+      />
+  </> ):( <p style={{ display: 'flex', justifyContent: 'center' }}>Record not found</p>
+)}
+   
+  
   </Paper></div>)
 }
 
-export default Subscription
+export default WithAuth(Subscription)

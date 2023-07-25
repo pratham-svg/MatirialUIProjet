@@ -58,7 +58,7 @@ const Pagiantion = () => {
   const Navigate = useNavigate();
 
   const FillterFormData =async (data)=>{
-    console.log("data this is the data ==> " , data)
+    
     setStatus(data)
     let Fillter =     {
       "key": "isActive",

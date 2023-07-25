@@ -64,10 +64,20 @@ const AuthLogin = () => {
             let logInData = await axios.post('https://machanicalcalculator.microlent.com/api/user/login', values )
             logInData = logInData.data
             let response = logInData.data
-            console.log("response===> "  , response)
+          
+            if (response.role == "user"){
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Invalid Credentials!',
+                // footer: '<a href="">Why do I have this issue?</a>'
+              })
+              Navigate('/login');
+            }else{ 
             if(logInData.statusCode == 200){
               await dispatch(logIn(response))
               login(response)
+
               Swal.fire(
                 'Success',
                 'Admin Login Successfully  ',
@@ -82,7 +92,7 @@ const AuthLogin = () => {
                 text: 'Invalid Credentials!',
                 // footer: '<a href="">Why do I have this issue?</a>'
               })
-            }
+            }}
             setStatus({ success: false });
             setSubmitting(false);
           } catch (err) {

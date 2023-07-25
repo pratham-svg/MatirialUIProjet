@@ -30,7 +30,7 @@ const AuthResetPassword = () => {
 // const [checked, setChecked] = React.useState(false);
 let Navigate = useNavigate()
 if(localStorage.getItem('token')){
-  console.log(localStorage.getItem('token'))
+  
   Navigate('/dashboard')
   
 }
@@ -62,7 +62,7 @@ return (
             "new_password": values.NewPassword
           })
           let response = data.data
-          console.log(response)
+          
           if(response.statusCode == 200 ){
             Swal.fire(
                 'success',

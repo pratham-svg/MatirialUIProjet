@@ -35,7 +35,7 @@ import Swal from 'sweetalert2';
 const AuthOtpVerify = () => {
     let Navigate = useNavigate()
     if(localStorage.getItem('token')){
-      console.log(localStorage.getItem('token'))
+    
       Navigate('/admin') 
     }
     const [ loading , SetLoading ] = useState(false)

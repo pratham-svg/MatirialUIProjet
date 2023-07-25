@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,{useEffect} from 'react'
 import { TextField, Button, Stack,TextareaAutosize } from '@mui/material';
 //import { Link } from "react-router-dom"
 import Box from '@mui/material/Box';
@@ -13,6 +13,8 @@ import { API_URL } from 'Services/Service';
 import axios from '../../../node_modules/axios/index';
 import Swal from 'sweetalert2';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useAuth } from 'AuthContext/AuthContext';
+import { useNavigate } from '../../../node_modules/react-router-dom/dist/index';
 
 
 
@@ -21,11 +23,12 @@ const UpdateSubscription = () => {
     const [duration, setDuration] = React.useState('');
     const [packageName, setPackageName] = React.useState('');
     const [amount, setAmount] = React.useState('');
-    const [features, setFeatures] = React.useState([{ value: '' }]);
+    const [features, setFeatures] = React.useState(["" ]);
     const [description, setDescription] = React.useState('');
     const [loading,setLoading] = React.useState(false)
     const { id } = useParams();
-    
+    const navigate= useNavigate()
+
     const { user } = useAuth();
 
   const isLoggedIn = !!user;
@@ -50,13 +53,14 @@ const UpdateSubscription = () => {
 
 
     const AddFeatures = () => {
-      setFeatures([...features, { value: '' }]);
+      setFeatures([...features,""]);
     };
   
     const handleSubmitf = (index, newValue) => {
       const updatedFields = [...features];
-      updatedFields[index].value = newValue;
+      updatedFields[index] = newValue;
       setFeatures(updatedFields);
+    
       
     };
     const RemoveFeatures = (index) => {
@@ -82,19 +86,20 @@ const UpdateSubscription = () => {
           "packageName": packageName,
           "features": features,
           "duration": duration,
-          "description" :description,
+          "description": description,
         }
-        console.log('this is the data ' , data )
+        
         let createSubscription = await axios.post(`${API_URL}/subscription/create-update`, data ,  { headers: { 'authorization': `bearer ${localStorage.getItem("token")}` } } )
-        console.log(createSubscription)
+      
         let response=createSubscription.data
-        console.log("response===> " , response)
+      
         if(response.statusCode==200){
           Swal.fire({
             icon: 'success',
             title: 'success',
-            text: 'subscritpion created successfully',
+            text: 'subscritpion Updated successfully',
           });
+          navigate("/SubscriptionList" )
         }else{
           Swal.fire({
             title:"error",
@@ -103,13 +108,22 @@ const UpdateSubscription = () => {
         }
         setLoading(false);
         } catch (error) {
-          console.log("response error" , error.response)
+        
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
             text: error.response.data.message,
           });
           setLoading(false);
+
+
+          
+     
+            
+           
+          
+          
+      
           // Navigate('/login'); // Consider whether you want to redirect to login on error or not.
         }
       
@@ -125,18 +139,18 @@ const UpdateSubscription = () => {
 
   const userupdatedata= async()=>{
     try{
-        let userdata= await axios.get(`${API_URL}/subscription/getOne/${id}`, { headers: { 'authorization': `bearer ${localStorage.getItem("token")}` } } )
-      console.log(userdata.data)
+        let userdata= await axios.get(`${API_URL}/subscription/getOne/${id}`,
+         { headers: { 'authorization': `bearer ${localStorage.getItem("token")}` } } )
+      
       const subscriptionData =userdata.data.data;
       setPackageName(subscriptionData.packageName)
       setAmount(subscriptionData.amount)
       setDuration(subscriptionData.duration)
     //   setFeatures(subscriptionData.features)
-    const extractedArray = JSON.parse(subscriptionData.features);
-      console.log("extractedArray===> " ,extractedArray)
+      
       setDescription(subscriptionData.description)
-      console.log(subscriptionData.features)
-      setFeatures(extractedArray)
+      
+      setFeatures(subscriptionData?.features)
       
 
 

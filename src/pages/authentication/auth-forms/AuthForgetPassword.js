@@ -38,7 +38,7 @@ const AuthForgetPassword = () => {
    let Navigate = useNavigate()
    const dispatch = useDispatch()
    if(localStorage.getItem('token')){
-     console.log(localStorage.getItem('token'))
+     
      Navigate('/admin') 
    }
    const [ loading , SetLoading ] = useState(false)
@@ -69,7 +69,7 @@ const AuthForgetPassword = () => {
                 localStorage.setItem('email',values.email)
                 let Userdata = await axios.post(`${API_URL}/user/forget-password`+`?email=${values.email}` , )
                 let response = Userdata.data
-                console.log("response===> " , response)
+            
                 if(response.statusCode == 200 ){
                   Swal.fire(
                     'Success',

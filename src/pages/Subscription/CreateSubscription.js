@@ -14,17 +14,21 @@ import axios from '../../../node_modules/axios/index';
 import Swal from 'sweetalert2';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useAuth } from 'AuthContext/AuthContext';
+import { useNavigate } from '../../../node_modules/react-router-dom/dist/index';
 
 
 function CreateSubscription() {
     const [duration, setDuration] = React.useState('');
     const [packageName, setPackageName] = React.useState('');
     const [amount, setAmount] = React.useState('');
-    const [features, setFeatures] = React.useState([{ value: '' }]);
+    const [features, setFeatures] = React.useState([""]);
     const [description, setDescription] = React.useState('');
     const [loading,setLoading] = React.useState(false)
    // const [isValid, setIsValid] = React.useState(true);
+   const navigate= useNavigate()
+
    const { user } = useAuth();
+
 
    const isLoggedIn = !!user;
 
@@ -45,12 +49,12 @@ function CreateSubscription() {
 
 
     const AddFeatures = () => {
-      setFeatures([...features, { value: '' }]);
+      setFeatures([...features,""]);
     };
   
     const handleSubmitf = (index, newValue) => {
       const updatedFields = [...features];
-      updatedFields[index].value = newValue;
+      updatedFields[index] = newValue;
       setFeatures(updatedFields);
       
     };
@@ -79,13 +83,14 @@ function CreateSubscription() {
         }
         let createSubscription = await axios.post(`${API_URL}/subscription/create-update`, data ,  { headers: { 'authorization': `bearer ${localStorage.getItem("token")}` } } )
         let response=createSubscription.data
-        console.log("response===> " , response)
+        
         if(response.statusCode==200){
           Swal.fire({
             icon: 'success',
             title: 'success',
             text: 'subscritpion created successfully',
           });
+          navigate("/SubscriptionList" )
         }else{
           Swal.fire({
             title:"error",
@@ -94,7 +99,7 @@ function CreateSubscription() {
         }
         setLoading(false);
         } catch (error) {
-          console.log("response error" , error.response)
+          
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
@@ -196,7 +201,7 @@ function CreateSubscription() {
             color='secondary'
             label="Features"
             onChange={e => handleSubmitf(index,e.target.value)}
-            value={field.value}
+            value={field}
             
             fullWidth
             required

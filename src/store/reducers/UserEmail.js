@@ -11,7 +11,7 @@ const UserEmail = createSlice({
      reducers : ({
         SaveEmail(state , action ){
             state.UserEmail = action.payload
-            console.log(' state.UserEmail', state.UserEmail)
+        
         }
      })
 })
