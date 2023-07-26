@@ -10,7 +10,6 @@ import {
   CardContent,
   ClickAwayListener,
   Grid,
-  IconButton,
   Paper,
   Popper,
   Stack,
@@ -24,7 +23,7 @@ import MainCard from 'components/MainCard';
 import Transitions from 'components/@extended/Transitions';
 import ProfileTab from './ProfileTab';
 // assets
-import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import {  UserOutlined } from '@ant-design/icons';
 import { deepOrange } from '@mui/material/colors';
 import { useNavigate } from '../../../../../../node_modules/react-router-dom/dist/index';
 // tab panel wrapper
@@ -141,17 +140,11 @@ const Profile = () => {
                             <Avatar sx={{ bgcolor: deepOrange[500] }}>{user ? user.name[0] : null}</Avatar>
                             <Stack>
                               <Typography variant="h6">{user ? user.name : null}</Typography>
-                              <Typography variant="body2" color="textSecondary">
-                                UI/UX Designer
-                              </Typography>
+                             
                             </Stack>
                           </Stack>
                         </Grid>
-                        <Grid item>
-                          <IconButton size="large" color="secondary" onClick={handleLogout}>
-                            <LogoutOutlined />
-                          </IconButton>
-                        </Grid>
+                       
                       </Grid>
                     </CardContent>
                     {open && (
