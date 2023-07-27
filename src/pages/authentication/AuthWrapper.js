@@ -21,10 +21,12 @@ const AuthWrapper = ({ children }) => (
       direction="column"
       justifyContent="flex-end"
       sx={{
-        minHeight: '100vh'
+        minHeight: '100vh',
+        mt:-5
+        
       }}
     >
-      <Grid item xs={12} sx={{ ml: 3, mt: 3 }}>
+      <Grid item xs={12} sx={{ ml: 3,mt:6 }}>
         <Logo />
       </Grid>
       <Grid item xs={12}>

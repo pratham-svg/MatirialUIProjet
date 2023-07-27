@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 // import { Link as RouterLink } from 'react-router-dom';
 // import Box from '@mui/material/Box';
 // import LinearProgress from '@mui/material/LinearProgress';
@@ -37,19 +37,14 @@ const AuthForgetPassword = () => {
 
    let Navigate = useNavigate()
    const dispatch = useDispatch()
-   if(localStorage.getItem('token')){
-     
-     Navigate('/admin') 
-   }
    const [ loading , SetLoading ] = useState(false)
 
-   useEffect(() => {
-    if(loading){
-      return<Box  sx= {{display: 'flex', justifyContent: 'center' ,  alignItems: 'center',   height: '80vh' }} >
-      <CircularProgress />
-      </Box> 
-     }
-  }, []);
+   
+  if(loading){
+    return<Box  sx= {{display: 'flex', justifyContent: 'center' ,  alignItems: 'center', height:"100%", width:"100%" }} >
+    <CircularProgress />
+    </Box> 
+   }
 
    
    return (
@@ -73,18 +68,18 @@ const AuthForgetPassword = () => {
                 if(response.statusCode == 200 ){
                   Swal.fire(
                     'Success',
-                    'OTP on mail.',
+                    'Check your email inbox OTP has been sent',
                     'success'
                   )
                   Navigate('/otpVerification')
                 }
                 if(response.statusCode == 203 ){
                   Swal.fire(
-                    'Success',
+                    'Oops...',
                       `${response.message}`,
                     'error'
                   )
-                  Navigate('/forgetPassword')
+                 return 
                 }
                 setStatus({ success: false });
                 setSubmitting(false);
@@ -92,14 +87,14 @@ const AuthForgetPassword = () => {
                
               } catch (err) {
                 Swal.fire(
-                  'Success',
-                  `somthing went wrong`,
+                  'Error',
+                  `Enter Valid Mail`,
                   'error'
                 )
                 setStatus({ success: false });
-                setErrors({ submit: err.message });
+                setErrors({ submit: "" });
                 SetLoading(false)
-                Navigate('/forgetPassword')
+               return
               }
          }}
        >
@@ -136,10 +131,11 @@ const AuthForgetPassword = () => {
                <Grid item xs={12}>
                  <AnimateButton>
                    <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="primary">
-                     Send Otp
+                     Send OTP
                    </Button>
                  </AnimateButton>
                </Grid>
+               
               
                
              </Grid>

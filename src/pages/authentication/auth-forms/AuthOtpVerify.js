@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
-// import { Link as RouterLink } from 'react-router-dom';
+import React, {  useState } from 'react';
+//  import { Link as RouterLink } from 'react-router-dom';
 // import Box from '@mui/material/Box';
 // import LinearProgress from '@mui/material/LinearProgress';
 // material-ui
 // import { logIn } from 'store/reducers/User';
 // import axios from '../../../../node_modules/axios/index';
-import { useNavigate } from '../../../../node_modules/react-router-dom/dist/index';
 // import { useAuth } from 'AuthContext/AuthContext';
 import {
   Button,
@@ -15,6 +14,8 @@ import {
   InputLabel,
   OutlinedInput,
   Stack,
+  
+  
 } from '@mui/material';
 // import Swal from 'sweetalert2'; // Import SweetAlert
 // third party
@@ -31,22 +32,73 @@ import { API_URL } from 'Services/Service';
 // assets
 // import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import Swal from 'sweetalert2';
+import { useNavigate } from '../../../../node_modules/react-router-dom/dist/index';
+
 
 const AuthOtpVerify = () => {
-    let Navigate = useNavigate()
-    if(localStorage.getItem('token')){
-    
-      Navigate('/admin') 
-    }
+
     const [ loading , SetLoading ] = useState(false)
     
-    useEffect(() => {
-     if(loading){
-       return<Box  sx= {{display: 'flex', justifyContent: 'center' ,  alignItems: 'center',   height: '80vh' }} >
-       <CircularProgress />
-       </Box> 
-      }
-   }, []);
+   
+const handleOtpSubmit = async  ()=>{
+  try{
+  SetLoading(true)
+  let Userdata = await axios.post(`${API_URL}/user/forget-password`+`?email=${localStorage.getItem('email')}` , )
+  let response = Userdata.data
+   console.log("response ===> " ,response)
+  if(response.statusCode == 200 ){
+    Swal.fire(
+      'Success',
+      'OTP Resend Successfully',
+      'success'
+    )
+    SetLoading(false)
+    return
+
+   
+  }
+  if(response.statusCode == 203 ){
+    Swal.fire(
+      'Oops...',
+        `${response.message}`,
+      'error'
+    )
+    SetLoading(false)
+   return 
+  }
+ 
+ 
+} catch (err) {
+  Swal.fire(
+    'Error',
+    `Enter Valid Mail`,
+    'error'
+  )
+  SetLoading(false)
+ return
+}
+
+
+}
+
+
+const handleKeyPress = (event) => {
+  const keyCode = event.keyCode || event.which;
+  const keyValue = String.fromCharCode(keyCode);
+
+  // Allow only numeric characters and backspace
+  const numericRegex = /^[0-9\b]+$/;
+  if (!numericRegex.test(keyValue)) {
+    event.preventDefault();
+  }
+};
+
+const Navigate= useNavigate()
+
+if(loading)  {
+   return <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <CircularProgress />
+    </Box>}
  
     
     return (
@@ -64,15 +116,16 @@ const AuthOtpVerify = () => {
                  let Userdata = await axios.post(`${API_URL}/user/verify`,
                  {
                     "email": localStorage.getItem("email"),
-                    "otp": values.otp
+                    "otp": String(values.otp)
                   } )
                  let response = Userdata.data
                  if(response.statusCode == 200 ){
                    Swal.fire(
                      'success',
-                     'otp verified successfully ',
+                     'OTP verified successfully ',
                      'success'
                    )
+                   
                    Navigate('/ResetPassword')
                  }
                  if(response.statusCode == 400 ){
@@ -88,6 +141,7 @@ const AuthOtpVerify = () => {
                  SetLoading(false)
                 
                } catch (err) {
+                console.log(err)
                  Swal.fire(
                    'Success',
                    `somthing went wrong`,
@@ -100,7 +154,9 @@ const AuthOtpVerify = () => {
                }
           }}
         >
+          
           {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
+            
             <form noValidate onSubmit={handleSubmit}>
               <Grid container spacing={3}>
                 <Grid item xs={12}>
@@ -113,9 +169,13 @@ const AuthOtpVerify = () => {
                       name="otp"
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      placeholder="Enter email address"
+                      placeholder="Enter OTP "
+                      onKeyPress={handleKeyPress}
+                      
+                   
                       fullWidth
                       error={Boolean(touched.email && errors.email)}
+                      
                     />
                     {touched.email && errors.email && (
                       <FormHelperText error id="standard-weight-helper-text-email-login">
@@ -137,6 +197,10 @@ const AuthOtpVerify = () => {
                     </Button>
                   </AnimateButton>
                 </Grid>
+                <Grid item xs={12} sx={{ mt: -1 }}>
+                    <Button  onClick={()=>  handleOtpSubmit()}> Resend OTP</Button>
+                   
+              </Grid>
                
                 
               </Grid>

@@ -9,7 +9,9 @@ const AuthLogin = Loadable(lazy(() => import('pages/authentication/Login')));
 const AuthRegister = Loadable(lazy(() => import('pages/authentication/Register')));
 const ForgetPassword = Loadable(lazy(() => import('pages/authentication/ForgetPassword')));
 const OtpVerification = Loadable(lazy(() => import('pages/authentication/OtpVerification')));
-const ResetPassword = Loadable(lazy(() => import('./../pages/authentication/ResetPassword')));
+const ResetPassword = Loadable(lazy(() => import('pages/authentication/ResetPassword')));
+const NotFound = Loadable(lazy(() => import('pages/NotFound')));
+
 
 
 
@@ -39,7 +41,12 @@ const LoginRoutes = {
     {
       path: 'ResetPassword',
       element: <ResetPassword />
-    }
+    },
+    {
+      path: '*',
+      element: <NotFound />
+    },
+
   ]
 };
 

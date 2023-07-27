@@ -65,14 +65,14 @@ const AuthLogin = () => {
             logInData = logInData.data
             let response = logInData.data
           
-            if (response.role == "user"){
+            if (response?.role == "user"){
               Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Invalid Credentials!',
                 // footer: '<a href="">Why do I have this issue?</a>'
               })
-              Navigate('/login');
+              return
             }else{ 
             if(logInData.statusCode == 200){
               await dispatch(logIn(response))

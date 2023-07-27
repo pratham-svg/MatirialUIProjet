@@ -55,7 +55,8 @@ return (
                 'NewPassword and ConfirmPassword must be same',
                 'error'
               )
-              Navigate('/ResetPassword')
+               Navigate('/ResetPassword')
+               return
            }
            let data = await axios.post(`${API_URL}/user/reset-password` , {
             "email": localStorage.getItem('email'),
@@ -69,7 +70,9 @@ return (
                 'Password change successfully',
                 'success'
               )
+            
               Navigate('/login')
+              return
            }
           setStatus({ success: false });
           setSubmitting(false);
@@ -79,7 +82,9 @@ return (
                 'something went wrong',
                 'error'
               )
-              Navigate('/ResetPassword')
+             
+               Navigate('/ResetPassword')
+               
           setStatus({ success: false });
           setErrors({ submit: err.message });
           setSubmitting(false);
@@ -94,12 +99,12 @@ return (
                 <InputLabel htmlFor="email-login">New Password</InputLabel>
                 <OutlinedInput
                   id="email-login"
-                  type="text"
+                  type="password"
                   value={values.NewPassword}
                   name="NewPassword"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  placeholder="Enter email address"
+                  placeholder="Enter Reset Password"
                   fullWidth
                   error={Boolean(touched.email && errors.email)}
                 />
@@ -115,12 +120,12 @@ return (
               <InputLabel htmlFor="email-login">Confirm Password</InputLabel>
               <OutlinedInput
                 id="email-login"
-                type="ConfirmPassword"
+                type="Password"
                 value={values.ConfirmPassword}
                 name="ConfirmPassword"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                placeholder="Enter email address"
+                placeholder="Enter Reset Password"
                 fullWidth
                 error={Boolean(touched.email && errors.email)}
               />
