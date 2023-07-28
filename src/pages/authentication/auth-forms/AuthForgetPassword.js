@@ -26,7 +26,7 @@ import { Formik } from 'formik';
 // project import
 //import FirebaseSocial from './FirebaseSocial';
 import AnimateButton from 'components/@extended/AnimateButton';
-import { Box, CircularProgress } from '../../../../node_modules/@mui/material/index';
+import { Backdrop, Box, CircularProgress } from '../../../../node_modules/@mui/material/index';
 import axios from '../../../../node_modules/axios/index';
 import { API_URL } from 'Services/Service';
 // assets
@@ -39,16 +39,22 @@ const AuthForgetPassword = () => {
    const dispatch = useDispatch()
    const [ loading , SetLoading ] = useState(false)
 
+
    
-  if(loading){
-    return<Box  sx= {{display: 'flex', justifyContent: 'center' ,  alignItems: 'center', height:"100%", width:"100%" }} >
-    <CircularProgress />
-    </Box> 
-   }
 
    
    return (
      <div>  
+      
+       <Box  sx= {{display: 'flex', justifyContent: 'center' ,  alignItems: 'center', height:"100%", width:"100%" }} >
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+       
+      >
+    <CircularProgress />
+    </Backdrop>
+    </Box> 
        <Formik
          initialValues={{
            email: '',
@@ -79,11 +85,12 @@ const AuthForgetPassword = () => {
                       `${response.message}`,
                     'error'
                   )
-                 return 
+                  
                 }
                 setStatus({ success: false });
                 setSubmitting(false);
                 SetLoading(false)
+                return
                
               } catch (err) {
                 Swal.fire(

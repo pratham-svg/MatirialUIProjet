@@ -25,7 +25,7 @@ import { Formik } from 'formik';
 // project import
 //import FirebaseSocial from './FirebaseSocial';
 import AnimateButton from 'components/@extended/AnimateButton';
-import { Box, CircularProgress } from '../../../../node_modules/@mui/material/index';
+import { Backdrop, Box, CircularProgress } from '../../../../node_modules/@mui/material/index';
 import axios from '../../../../node_modules/axios/index';
 import { API_URL } from 'Services/Service';
 
@@ -94,15 +94,28 @@ const handleKeyPress = (event) => {
 };
 
 const Navigate= useNavigate()
-
-if(loading)  {
-   return <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <CircularProgress />
-    </Box>}
+if(localStorage.getItem('email') == null ){
+  console.log('dk exivure ')
+  return window.location.href = 'admin/login'
+}
+// if(loading)  {
+//    return <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+//       <CircularProgress />
+//     </Box>}
  
     
     return (
       <div>  
+        
+       <Box  sx= {{display: 'flex', justifyContent: 'center' ,  alignItems: 'center', height:"100%", width:"100%" }} >
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+       
+      >
+    <CircularProgress />
+    </Backdrop>
+    </Box> 
         <Formik
           initialValues={{
             submit: null

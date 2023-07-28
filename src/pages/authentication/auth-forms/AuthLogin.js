@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // import Box from '@mui/material/Box';
 // import LinearProgress from '@mui/material/LinearProgress';
@@ -13,8 +13,8 @@ import {
   FormHelperText,
   Grid,
   Link,
-  IconButton,
-  InputAdornment,
+  // IconButton,
+  // InputAdornment,
   InputLabel,
   OutlinedInput,
   Stack,
@@ -27,28 +27,41 @@ import { useDispatch  } from 'react-redux';
 // project import
 //import FirebaseSocial from './FirebaseSocial';
 import AnimateButton from 'components/@extended/AnimateButton';
+import { Backdrop, Box, CircularProgress } from '../../../../node_modules/@mui/material/index';
 
 // assets
-import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
+//import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
 const AuthLogin = () => {
   // const [checked, setChecked] = React.useState(false);
   let Navigate = useNavigate()
-  const [showPassword, setShowPassword] = React.useState(false);
+ // const [showPassword, setShowPassword] = React.useState(false);
   const {  login } = useAuth();
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
+  // const handleClickShowPassword = () => {
+  //   setShowPassword(!showPassword);
+  // };
   let dispatch = useDispatch()
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
+  const [ loading , SetLoading ] = useState(false)
+
+  // const handleMouseDownPassword = (event) => {
+  //   event.preventDefault();
+  // };
 
   
   return (
     <div>  
+
+     <Box  sx= {{display: 'flex', justifyContent: 'center' ,  alignItems: 'center', height:"100%", width:"100%" }} >
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+       
+      >
+    <CircularProgress />
+    </Backdrop>
+    </Box> 
       <Formik
         initialValues={{
           email: '',
@@ -59,7 +72,8 @@ const AuthLogin = () => {
           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
           password: Yup.string().max(255).required('Password is required')
         })}
-        onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+        onSubmit={async (values, {  setStatus, setSubmitting }) => {
+          SetLoading(true)
           try {
             let logInData = await axios.post('https://machanicalcalculator.microlent.com/api/user/login', values )
             logInData = logInData.data
@@ -72,7 +86,8 @@ const AuthLogin = () => {
                 text: 'Invalid Credentials!',
                 // footer: '<a href="">Why do I have this issue?</a>'
               })
-              return
+              SetLoading(false)
+                return
             }else{ 
             if(logInData.statusCode == 200){
               await dispatch(logIn(response))
@@ -84,6 +99,8 @@ const AuthLogin = () => {
                 'success'
               )
               localStorage.setItem('token' ,response.token )
+              SetLoading(false)
+
               Navigate('/')
             }else{
               Swal.fire({
@@ -92,12 +109,22 @@ const AuthLogin = () => {
                 text: 'Invalid Credentials!',
                 // footer: '<a href="">Why do I have this issue?</a>'
               })
+              SetLoading(false)
+
             }}
             setStatus({ success: false });
             setSubmitting(false);
           } catch (err) {
             setStatus({ success: false });
-            setErrors({ submit: err.message });
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Enter Valid Email',
+              // footer: '<a href="">Why do I have this issue?</a>'
+            })
+            SetLoading(false)
+
+            // setErrors({ submit: err.message });
             setSubmitting(false);
           }
         }}
@@ -133,24 +160,24 @@ const AuthLogin = () => {
                     fullWidth
                     error={Boolean(touched.password && errors.password)}
                     id="-password-login"
-                    type={showPassword ? 'text' : 'password'}
+                    type={'password'}
                     value={values.password}
                     name="password"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                          edge="end"
-                          size="large"
-                        >
-                          {showPassword ? <EyeOutlined /> : <EyeInvisibleOutlined />}
-                        </IconButton>
-                      </InputAdornment>
-                    }
+                    // endAdornment={
+                    //   <InputAdornment position="end">
+                    //     <IconButton
+                    //       aria-label="toggle password visibility"
+                    //       onClick={handleClickShowPassword}
+                    //       onMouseDown={handleMouseDownPassword}
+                    //       edge="end"
+                    //       size="large"
+                    //     >
+                    //       {/* {showPassword ? <EyeOutlined /> : <EyeInvisibleOutlined />} */}
+                    //     </IconButton>
+                    //   </InputAdornment>
+                    // }
                     placeholder="Enter password"
                   />
                   {touched.password && errors.password && (

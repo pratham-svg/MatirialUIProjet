@@ -1,10 +1,10 @@
-import React from 'react';
+import React,{useState}from 'react';
 // import Box from '@mui/material/Box';
 // import LinearProgress from '@mui/material/LinearProgress';
 // material-ui
 import { API_URL } from 'Services/Service';
 import axios from '../../../../node_modules/axios/index';
-import { useNavigate } from '../../../../node_modules/react-router-dom/dist/index';
+//import { useNavigate } from '../../../../node_modules/react-router-dom/dist/index';
 import {
   Button,
  // Divider,
@@ -21,22 +21,39 @@ import { Formik } from 'formik';
 // project import
 //import FirebaseSocial from './FirebaseSocial';
 import AnimateButton from 'components/@extended/AnimateButton';
+//import { useAuth } from 'AuthContext/AuthContext';
+import WithOutAuth from 'components/WithOutAuth ';
+import { Backdrop,Box, CircularProgress } from '../../../../node_modules/@mui/material/index';
 
 // assets
 
 
 
 const AuthResetPassword = () => {
+  const [ loading , SetLoading ] = useState(false)
+
 // const [checked, setChecked] = React.useState(false);
-let Navigate = useNavigate()
-if(localStorage.getItem('token')){
-  
-  Navigate('/dashboard')
-  
-}
+// let Navigate = useNavigate()
+// const {user}= useAuth();
+// useEffect(()=> {
+//    if(user){
+//      return window.location.href = "/admin"
+//    }
+// },[user])
 
 return (
   <div>  
+    <Box  sx= {{display: 'flex', justifyContent: 'center' ,  alignItems: 'center', height:"100%", width:"100%" }} >
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+       
+      >
+    <CircularProgress />
+    </Backdrop>
+    </Box> 
+
+
     <Formik
       initialValues={{
         NewPassword : '',
@@ -47,7 +64,10 @@ return (
         NewPassword: Yup.string().max(255).required('NewPassword is required'),
         ConfirmPassword: Yup.string().max(255).required('ConfirmPassword is required')
       })}
-      onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+      onSubmit={async (values, {  setStatus, setSubmitting }) => {
+        SetLoading(true)
+
+        
         try {
            if(values.NewPassword != values.ConfirmPassword ){
             Swal.fire(
@@ -56,12 +76,14 @@ return (
                 'error'
               )
                Navigate('/ResetPassword')
+               SetLoading(false)
                return
            }
            let data = await axios.post(`${API_URL}/user/reset-password` , {
             "email": localStorage.getItem('email'),
             "new_password": values.NewPassword
           })
+          localStorage.removeItem('email')
           let response = data.data
           
           if(response.statusCode == 200 ){
@@ -72,22 +94,31 @@ return (
               )
             
               Navigate('/login')
+              SetLoading(false)
               return
+           }else{
+            Swal.fire(
+              'error',
+              'something went wrong',
+              'error'
+            )
            }
           setStatus({ success: false });
           setSubmitting(false);
+          SetLoading(false)
         } catch (err) {
             Swal.fire(
                 'error',
-                'something went wrong',
+                err.message,
                 'error'
               )
              
                Navigate('/ResetPassword')
                
           setStatus({ success: false });
-          setErrors({ submit: err.message });
+          //setErrors({ submit: err.message });
           setSubmitting(false);
+          SetLoading(false)
         }
       }}
     >
@@ -104,7 +135,7 @@ return (
                   name="NewPassword"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  placeholder="Enter Reset Password"
+                  placeholder="Enter New Password"
                   fullWidth
                   error={Boolean(touched.email && errors.email)}
                 />
@@ -125,7 +156,7 @@ return (
                 name="ConfirmPassword"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                placeholder="Enter Reset Password"
+                placeholder="Enter Confirm Password"
                 fullWidth
                 error={Boolean(touched.email && errors.email)}
               />
@@ -158,4 +189,4 @@ return (
 );
 }
 
-export default AuthResetPassword
+export default WithOutAuth(AuthResetPassword)

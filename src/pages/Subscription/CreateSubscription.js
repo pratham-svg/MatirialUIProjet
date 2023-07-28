@@ -15,7 +15,7 @@ const validationSchema = Yup.object().shape({
   amount: Yup.number().required('Amount is required').positive('Please enter a valid positive number'),
   duration: Yup.string().required('Duration is required'),
   description: Yup.string().required('Description is required').min(2,'Description must be at least 2 characters').max(225,"maximum 225 characters").trim(),
-  features:Yup.array(Yup.string().required().min(2,'features must be at least 2 characters').max(40,"maximum 40 characters").trim())
+  features:Yup.array(Yup.string().required("features is required").min(2,'features must be at least 2 characters').max(40,"maximum 40 characters").trim())
 
   
 
@@ -198,7 +198,7 @@ function CreateSubscription() {
                 {...formik.getFieldProps(`features[${index}]`)}
                 fullWidth
               />
-               {formik.touched.features?.[index] && formik.errors.features?.[index] && <div style={{marginBottom:5,color:"red"}}>feature is required </div>}
+               {formik.touched.features?.[index] && formik.errors.features?.[index] && <div style={{marginBottom:5,color:"red"}}>{formik.errors.features[index]} </div>}
              </div>
                   
 
