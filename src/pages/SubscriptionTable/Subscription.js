@@ -124,7 +124,7 @@ const fetchUserList = async (searchQuery) => {
       );
 
       const { data} = response.data;
-      setCount(data.count)
+      setCount(response.data.count)
     setSubscriptionList(data)
      setLoading(false);
 
@@ -199,9 +199,7 @@ if(loading){
           </TableRow>
         </TableHead>
         <TableBody>
-          {subscriptionList
-            ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((row) => {
+          {subscriptionList.map((row) => {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                    <TableCell  align={"start"}>
@@ -229,9 +227,9 @@ if(loading){
       </Table>
     </TableContainer>
     <TablePagination
-      rowsPerPageOptions={count}
+      rowsPerPageOptions={[5,10,50,100]}
       component="div"
-      count={subscriptionList.length}
+      count={count}
       rowsPerPage={rowsPerPage}
       page={page}
       onPageChange={handleChangePage}

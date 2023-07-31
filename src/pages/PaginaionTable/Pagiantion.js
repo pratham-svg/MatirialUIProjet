@@ -20,6 +20,8 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 
+
+
 const columns = [
   { id: 'firstName', label: 'First Name', minWidth: 170 },
   {
@@ -83,8 +85,38 @@ const Pagiantion = () => {
     );
 
     await SetUserData(UserList?.data?.data);
-    setCount(UserList?.data?.data?.count)
+    setCount(UserList?.data?.count)
     setLoading(false);
+  }
+
+  const ActiveStatus= async(id , status )=>{
+    try{
+      setLoading(true)
+      console.log("id , status ===> " , id , status )
+      let UserStatus = await axios.post('https://machanicalcalculator.microlent.com/api/user/update/user-block-unblock' ,{ userId : id , status : !status}  , {
+        headers: { authorization: `bearer ${localStorage.getItem('token')}` }
+      })
+      let resposne = UserStatus.data  
+      if(resposne.statusCode == 200 ){
+        Swal.fire({
+          icon: 'success',
+          title: ' Success',
+          text: 'Status Updated Successfully'
+        });
+      }
+      setLoading(false)
+     return 
+    }
+    catch(err){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!'
+      });
+      setLoading(false)
+     console.log(err.message , "err")
+    }
+
   }
 
   const setuserList = async () => {
@@ -111,7 +143,7 @@ const Pagiantion = () => {
       );
 
       await SetUserData(UserList?.data?.data);
-      setCount(UserList?.data?.data?.count)
+      setCount(UserList?.data?.count)
       setLoading(false);
     } catch (err) {
       Swal.fire({
@@ -187,7 +219,7 @@ const Pagiantion = () => {
                     <TableCell align={'start'}>{row.firstName}</TableCell>
                     <TableCell align={'center'}>{row.email}</TableCell>
                     <TableCell align={'center'}>{row.mobileNo}</TableCell>
-                    <TableCell align={'center'}>{row.isActive ? 'Active' : 'Inactive'}</TableCell>
+                    <TableCell align={'center'}  ><button  onClick={()=> ActiveStatus(row.id , row.isActive )}>{row.isActive ? 'Active' : 'InActive'}</button></TableCell>
                   </TableRow>
                 );
               })}
@@ -195,9 +227,9 @@ const Pagiantion = () => {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={count}
+          rowsPerPageOptions={[5,10,50,100]}
           component="div"
-          count={UserData.length}
+          count={count}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

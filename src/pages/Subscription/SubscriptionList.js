@@ -130,7 +130,7 @@ function SubscriptionList() {
     
           
             setSubscriptionList(data)
-          setCount(data.count)
+          setCount(response.data.count)
           setLoading(false);
         } catch (error) {
           Swal.fire({
@@ -244,9 +244,7 @@ function SubscriptionList() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {subscriptionList
-                ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row , index) => {
+              {subscriptionList.map((row , index) => {
                   return (
                     <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                         <TableCell  align={"center"}>
@@ -275,9 +273,9 @@ function SubscriptionList() {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={count}
+          rowsPerPageOptions={[5,10,50,100]}
           component="div"
-          count={subscriptionList.length}
+          count={count}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

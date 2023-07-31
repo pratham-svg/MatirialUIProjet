@@ -93,7 +93,7 @@ const ContactUs = () => {
         { headers: { authorization: `bearer ${localStorage.getItem('token')}` } }
       );
       setUserData(response.data.data);
-      setCount(response.data.data.count);
+      setCount(response.data?.count);
       setLoading(false);
     } catch (err) {
       Swal.fire({
@@ -154,7 +154,7 @@ const ContactUs = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {userData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                  {userData.map((row) => {
                     return (
                       <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                         {columns.map((column) => {
@@ -172,9 +172,9 @@ const ContactUs = () => {
               </Table>
             </TableContainer>
             <TablePagination
-              rowsPerPageOptions={count}
+              rowsPerPageOptions={[5,10,50,100]}
               component="div"
-              count={userData.length}
+              count={count}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
