@@ -14,7 +14,7 @@ const icons = {
 
 const dashboard = {
   id: 'group-dashboard',
-  title: 'Navigation',
+  title: '',
   type: 'group',
   children: [
     {
@@ -26,14 +26,6 @@ const dashboard = {
       breadcrumbs: false
     },
     {
-      id: 'users',
-      title: 'Users',
-      type: 'item',
-      url: '/users',
-      icon: icons.UserOutlined,
-      breadcrumbs: false
-    },
-    {
       id: 'ContactUs',
       title: 'Contact Us',
       type: 'item',
@@ -42,6 +34,15 @@ const dashboard = {
       breadcrumbs: false
       
     },
+    {
+      id: 'users',
+      title: 'Users',
+      type: 'item',
+      url: '/users',
+      icon: icons.UserOutlined,
+      breadcrumbs: false
+    },
+   
     {
       id: 'Subscription',
       title: 'User Subscription',

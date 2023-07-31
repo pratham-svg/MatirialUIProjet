@@ -59,7 +59,7 @@ const columns = [
     id: ' ',
     label: 'Action',
     minWidth: 170,
-    align: 'start',
+    align: 'center',
     format: (value) => value.toFixed(2),
   },
 ];
@@ -262,9 +262,12 @@ function SubscriptionList() {
                            {row.amount}
                            </TableCell>
 
-                           <Button onClick={() => updateSubsciption(row.id)}  ><EditIcon/></Button>    
+
+                           <TableCell  align={"center"}>
+                            <Button onClick={() => updateSubsciption(row.id)}   ><EditIcon/></Button>    
                             <Button  onClick={()=>{deleteSubscription(row.id)}} ><DeleteIcon/></Button>    
-                     
+                            </TableCell>
+
                     </TableRow>
                   );
                 })}

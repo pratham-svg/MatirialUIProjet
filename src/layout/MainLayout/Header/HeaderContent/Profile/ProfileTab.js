@@ -26,7 +26,7 @@ const ProfileTab = ({ handleLogout }) => {
         </ListItemIcon>
         <ListItemText primary="Edit Profile" />
       </ListItemButton> */}
-      <ListItemButton onClick={handleLogout}>
+      <ListItemButton onClick={handleLogout}  sx={{pl:3}}>
         <ListItemIcon>
           <LogoutOutlined />
         </ListItemIcon>

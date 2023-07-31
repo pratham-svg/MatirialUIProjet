@@ -167,7 +167,7 @@ if(loading){
 
   return (
     <div>
- <Box sx={{display:"flex" ,justifyContent:"flex-end" }}>
+ <Box sx={{display:"flex" ,justifyContent:"flex-end", marginBottom: 2 }}>
  <TextField
           id="outlined-basic"
           label="Search"

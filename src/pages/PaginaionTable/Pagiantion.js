@@ -152,7 +152,7 @@ const Pagiantion = () => {
 
   return (
     <>
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end',marginBottom: 2 }}>
         <FormControl sx={{ width: '150px' }} fullWidth>
           <InputLabel id="demo-simple-select-label">Status</InputLabel>
           <Select
