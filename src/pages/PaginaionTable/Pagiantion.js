@@ -21,7 +21,7 @@ import Select from '@mui/material/Select';
 
 
 const columns = [
-  { id: 'firstName', label: 'FirstName', minWidth: 170 },
+  { id: 'firstName', label: 'First Name', minWidth: 170 },
   {
     id: 'email',
     label: 'Email',
@@ -31,7 +31,7 @@ const columns = [
   },
   {
     id: 'mobileNo',
-    label: 'MobileNo.',
+    label: 'Mobile No.',
     minWidth: 170,
     align: 'center',
     format: (value) => value.toLocaleString('en-US')

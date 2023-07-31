@@ -16,8 +16,8 @@ import WithAuth from 'components/WithAuth';
 import { useNavigate } from '../../../node_modules/react-router-dom/dist/index';
 
 const columns = [
-  { id: 'firstName', label: 'FirstName', minWidth: 170 },
-  { id: 'lastName', label: 'LastName', minWidth: 100 },
+  { id: 'firstName', label: 'First Name', minWidth: 120 },
+  { id: 'lastName', label: 'Last Name', minWidth: 120 },
   {
     id: 'email',
     label: 'Email',

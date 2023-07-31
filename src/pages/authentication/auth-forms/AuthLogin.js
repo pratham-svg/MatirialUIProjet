@@ -93,11 +93,11 @@ const AuthLogin = () => {
               await dispatch(logIn(response))
               login(response)
 
-              Swal.fire(
-                'Success',
-                'Admin Login Successfully  ',
-                'success'
-              )
+              // Swal.fire(
+              //   'Success',
+              //   'Admin Login Successfully  ',
+              //   'success'
+              // )
               localStorage.setItem('token' ,response.token )
               SetLoading(false)
 

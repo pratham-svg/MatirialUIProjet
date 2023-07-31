@@ -1,12 +1,13 @@
 // assets
-import { DashboardOutlined,UserOutlined,  ContactsOutlined 
+import { DashboardOutlined,UserOutlined,  ContactsOutlined,UserAddOutlined 
 } from '@ant-design/icons';
 
 // icons
 const icons = {
   DashboardOutlined,
   UserOutlined,
-  ContactsOutlined 
+  ContactsOutlined ,
+  UserAddOutlined
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
@@ -34,7 +35,7 @@ const dashboard = {
     },
     {
       id: 'ContactUs',
-      title: 'ContactUs',
+      title: 'Contact Us',
       type: 'item',
       url: '/ContactUs',
       icon: icons.ContactsOutlined,
@@ -46,7 +47,7 @@ const dashboard = {
       title: 'User Subscription',
       type: 'item',
       url: '/Subscription',
-      icon: icons.ContactsOutlined,
+      icon: icons.UserAddOutlined,
       breadcrumbs: false
       
     }
@@ -59,3 +60,6 @@ const dashboard = {
 
 
 export default dashboard;
+
+
+

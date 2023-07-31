@@ -36,7 +36,7 @@ const columns = [
  
   {
     id: 'packageName',
-    label: 'PackageName',
+    label: 'Package Name',
     minWidth: 170,
     align: 'center',
     format: (value) => value.toLocaleString('en-US'),

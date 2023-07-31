@@ -36,7 +36,6 @@ import { useNavigate } from '../../../../node_modules/react-router-dom/dist/inde
 
 
 const AuthOtpVerify = () => {
-
     const [ loading , SetLoading ] = useState(false)
     
    
@@ -66,7 +65,8 @@ const handleOtpSubmit = async  ()=>{
     SetLoading(false)
    return 
   }
- 
+  SetLoading(false)
+
  
 } catch (err) {
   Swal.fire(

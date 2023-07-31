@@ -9,5 +9,5 @@ import NotFoundRoute from './NotFoundRoute';
 
 
 export default function ThemeRoutes() {
-  return useRoutes([MainRoutes, LoginRoutes , NotFoundRoute ]);
+  return useRoutes([MainRoutes, LoginRoutes , NotFoundRoute]);
 }

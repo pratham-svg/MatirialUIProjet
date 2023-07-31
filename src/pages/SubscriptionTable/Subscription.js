@@ -20,6 +20,18 @@ import WithAuth from 'components/WithAuth';
 // import { useNavigate } from '../../../node_modules/react-router-dom/dist/index';
 
 const columns = [
+
+  {  label: 'Name', minWidth: 170 },
+
+  {
+    id: 'email',
+    label: 'Email',
+    minWidth: 170,
+    align: 'center',
+    format: (value) => value.toLocaleString('en-US'),
+  },
+
+
     {
       id: 'amount',
       label: 'Amount',
@@ -36,15 +48,15 @@ const columns = [
     },
     {
       id: 'subscriptionDate',
-      label: 'SubscriptionDate',
+      label: 'Subscription Date',
       minWidth: 170,
       align: 'center',
-      format: (value) => value.toLocaleString('en-US')  ,
+      format: (value) => value.toLocaleString('en-US'),
     },
 
     {
         id: 'expiryDate',
-        label: 'ExpiryDate',
+        label: 'Expiry Date',
         minWidth: 170,
         align: 'center',
         format: (value) => value.toLocaleString('en-US')  ,
@@ -80,6 +92,10 @@ const debouncedSearch = useDebounce(search, 1000); // Debounce the search query 
 const handleSearchQueryChange = (event) => {
   setSearch(event.target.value);
 };
+
+const formatUserName =(user) => {
+   return user?.firstName + " " + user?.lastName
+}
 
 
 
@@ -188,17 +204,23 @@ if(loading){
             .map((row) => {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                                    <TableCell  align={"center"}>
+                   <TableCell  align={"start"}>
+                       {formatUserName(row?.user)}
+                       </TableCell>
+                   <TableCell  align={"center"}>
+                       {row?.user?.email}
+                       </TableCell>
+                  <TableCell  align={"center"}>
                        {row.amount}
                        </TableCell>
                   <TableCell  align={"center"}>
-                       {row.isYearly?"true":"false"}
+                       {row.isYearly?"Yes":"No"}
                        </TableCell>
                   <TableCell  align={"center"}>
-                       {row.subscriptionDate?row.subscriptionDate:"-"}
+                       {row.subscriptionDate?new Date(row.subscriptionDate).toLocaleDateString():"-"}
                        </TableCell>
                   <TableCell  align={"center"}>
-                       {row.expiryDate?row.expiryDate:"-"}
+                       {row.expiryDate? new Date(row.expiryDate).toLocaleDateString():"-"}
                        </TableCell>
                 </TableRow>
               );

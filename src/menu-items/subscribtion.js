@@ -1,9 +1,9 @@
-import { DashboardOutlined,UserOutlined,  ContactsOutlined 
+import { DashboardOutlined,UserOutlined, UnorderedListOutlined ,
 } from '@ant-design/icons';
 const icons = {
     DashboardOutlined,
     UserOutlined,
-    ContactsOutlined 
+    UnorderedListOutlined 
   };
   export const Subscription=
   {
@@ -17,8 +17,10 @@ const icons = {
         title: 'Subscription List',
         type: 'item',
         url: '/SubscriptionList',
-        icon: icons.UserOutlined,
+        icon: icons.UnorderedListOutlined ,
         breadcrumbs: false
       },]
     
   }
+
+

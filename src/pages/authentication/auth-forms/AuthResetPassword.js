@@ -24,12 +24,14 @@ import AnimateButton from 'components/@extended/AnimateButton';
 //import { useAuth } from 'AuthContext/AuthContext';
 import WithOutAuth from 'components/WithOutAuth ';
 import { Backdrop,Box, CircularProgress } from '../../../../node_modules/@mui/material/index';
+import { useNavigate } from '../../../../node_modules/react-router-dom/dist/index';
 
 // assets
 
 
 
 const AuthResetPassword = () => {
+  let Navigate = useNavigate()
   const [ loading , SetLoading ] = useState(false)
 
 // const [checked, setChecked] = React.useState(false);
@@ -109,12 +111,12 @@ return (
         } catch (err) {
             Swal.fire(
                 'error',
-                err.message,
+                'Required a strong password ',
                 'error'
               )
              
                Navigate('/ResetPassword')
-               
+               SetLoading(false) 
           setStatus({ success: false });
           //setErrors({ submit: err.message });
           setSubmitting(false);

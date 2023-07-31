@@ -8,12 +8,8 @@ const NotFound = Loadable(lazy(() => import('pages/NotFound')));
 
 const NotFoundRoute = [
   {  path: '*',
-    // element: <MinimalLayout />,
-    children: [
-      {
-        path: '*',
-        element: <NotFound />
-      }]
+    element: <NotFound />
+    
     }
 ]
 

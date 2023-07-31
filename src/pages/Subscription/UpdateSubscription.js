@@ -85,7 +85,7 @@ const UpdateSubscription = () => {
           Swal.fire({
             icon: 'success',
             title: 'Success',
-            text: 'Subscription created successfully',
+            text: 'Subscription updated successfully',
           });
           navigate("/SubscriptionList");
         } else {
@@ -161,7 +161,7 @@ const UpdateSubscription = () => {
   
 
 
-            // Navigate('/logi
+            // Navigate('/logi 
     }
     catch(error){
         console.log(error)
