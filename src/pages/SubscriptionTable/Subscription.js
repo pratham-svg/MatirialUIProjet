@@ -17,8 +17,10 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import Swal from 'sweetalert2';
 import WithAuth from 'components/WithAuth';
-//import DatePicker from "react-datepicker";
-//import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "../SubscriptionTable/Sub.css";
+
 ///import { DatePicker, DateRangePicker, LocalizationProvider } from '../../../node_modules/@mui/lab/index';
 
 
@@ -95,13 +97,13 @@ const [count,setCount]  = React.useState(0)
 const [search, setSearch] = useState('');
 const debouncedSearch = useDebounce(search, 1000);
 
-// const [startDate, setStartDate] = useState(new Date());
-// const [endDate, setEndDate] = useState(null);
-// const onChange = (dates) => {
-//   const [start, end] = dates;
-//   setStartDate(start);
-//   setEndDate(end); // Debounce the search query with a delay of 500ms
-// }
+const [startDate, setStartDate] = useState(new Date());
+const [endDate, setEndDate] = useState(null);
+const onChange = (dates) => {
+  const [start, end] = dates;
+  setStartDate(start);
+  setEndDate(end); // Debounce the search query with a delay of 500ms
+}
 
 const handleSearchQueryChange = (event) => {
   setSearch(event.target.value);
@@ -131,16 +133,16 @@ const fetchUserList = async (searchQuery) => {
               value: searchQuery,
               operator: 'string'
             },
-            // {
-            //   key: 'startDate',
-            //   value: startDate?? "",
-            //   operator: 'string'
-            // },
-            // {
-            //   key: 'endDate',
-            //   value: endDate ?? "",
-            //   operator: 'string'
-            // }
+            {
+              key: 'startDate',
+              value: startDate?? "",
+              operator: 'string'
+            },
+            {
+              key: 'endDate',
+              value: endDate ?? "",
+              operator: 'string'
+            }
             
           ]
         },
@@ -166,7 +168,7 @@ const fetchUserList = async (searchQuery) => {
 
   useEffect(() => {
     fetchUserList(debouncedSearch);
-  }, [page, rowsPerPage, debouncedSearch ])
+  }, [page, rowsPerPage, debouncedSearch,startDate,endDate ])
 
 
 
@@ -190,6 +192,9 @@ if(loading){
 
 
 
+
+
+
   return (
     <div>
       
@@ -201,11 +206,11 @@ if(loading){
           value={search}
           onChange={handleSearchQueryChange}
         />
-    {/* <Box >
+    <Box >
   <DatePicker
-  
+    
      customInput={<TextField
-     sx={{fontsize: "16px",padding: "8px"}}
+     sx={{fontsize: "16px"}}
      
       id="outlined-basic"
        variant="outlined"
@@ -225,7 +230,7 @@ if(loading){
       
       // inline
     />
-      </Box> */}
+      </Box>
         </Box>
    
     
@@ -294,3 +299,4 @@ if(loading){
 }
 
 export default WithAuth(Subscription)
+
