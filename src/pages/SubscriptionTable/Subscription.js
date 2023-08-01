@@ -12,11 +12,18 @@ import axios from '../../../node_modules/axios/index';
 import CircularProgress from '@mui/material/CircularProgress';
  import Box from '@mui/material/Box';
  import { TextField } from '../../../node_modules/@mui/material/index';
-
+ 
 
 
 import Swal from 'sweetalert2';
 import WithAuth from 'components/WithAuth';
+//import DatePicker from "react-datepicker";
+//import "react-datepicker/dist/react-datepicker.css";
+///import { DatePicker, DateRangePicker, LocalizationProvider } from '../../../node_modules/@mui/lab/index';
+
+
+
+
 // import { useNavigate } from '../../../node_modules/react-router-dom/dist/index';
 
 const columns = [
@@ -86,8 +93,15 @@ const [ subscriptionList , setSubscriptionList ] = React.useState([]);
 const [loading,setLoading] = React.useState(false)
 const [count,setCount]  = React.useState(0)
 const [search, setSearch] = useState('');
-const debouncedSearch = useDebounce(search, 1000); // Debounce the search query with a delay of 500ms
+const debouncedSearch = useDebounce(search, 1000);
 
+// const [startDate, setStartDate] = useState(new Date());
+// const [endDate, setEndDate] = useState(null);
+// const onChange = (dates) => {
+//   const [start, end] = dates;
+//   setStartDate(start);
+//   setEndDate(end); // Debounce the search query with a delay of 500ms
+// }
 
 const handleSearchQueryChange = (event) => {
   setSearch(event.target.value);
@@ -116,7 +130,18 @@ const fetchUserList = async (searchQuery) => {
               key: 'all',
               value: searchQuery,
               operator: 'string'
-            }
+            },
+            // {
+            //   key: 'startDate',
+            //   value: startDate?? "",
+            //   operator: 'string'
+            // },
+            // {
+            //   key: 'endDate',
+            //   value: endDate ?? "",
+            //   operator: 'string'
+            // }
+            
           ]
         },
         
@@ -167,6 +192,7 @@ if(loading){
 
   return (
     <div>
+      
  <Box sx={{display:"flex" ,justifyContent:"flex-end", marginBottom: 2 }}>
  <TextField
           id="outlined-basic"
@@ -175,7 +201,31 @@ if(loading){
           value={search}
           onChange={handleSearchQueryChange}
         />
-        
+    {/* <Box >
+  <DatePicker
+  
+     customInput={<TextField
+     sx={{fontsize: "16px",padding: "8px"}}
+     
+      id="outlined-basic"
+       variant="outlined"
+
+
+      
+    
+    />}
+      selected={startDate}
+      onChange={onChange}
+      startDate={startDate}
+      endDate={endDate}
+      showIcon
+      selectsRange
+      
+    
+      
+      // inline
+    />
+      </Box> */}
         </Box>
    
     

@@ -18,6 +18,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import  Button  from '@mui/material/Button';
 
 
 
@@ -104,6 +105,8 @@ const Pagiantion = () => {
           text: 'Status Updated Successfully'
         });
       }
+      await setuserList()
+      
       setLoading(false)
      return 
     }
@@ -113,11 +116,14 @@ const Pagiantion = () => {
         title: 'Oops...',
         text: 'Something went wrong!'
       });
+      
       setLoading(false)
      console.log(err.message , "err")
+    
     }
-
+    
   }
+  
 
   const setuserList = async () => {
     try {
@@ -142,7 +148,7 @@ const Pagiantion = () => {
         }
       );
 
-      await SetUserData(UserList?.data?.data);
+       SetUserData(UserList?.data?.data);
       setCount(UserList?.data?.count)
       setLoading(false);
     } catch (err) {
@@ -219,7 +225,7 @@ const Pagiantion = () => {
                     <TableCell align={'start'}>{row.firstName}</TableCell>
                     <TableCell align={'center'}>{row.email}</TableCell>
                     <TableCell align={'center'}>{row.mobileNo}</TableCell>
-                    <TableCell align={'center'}  ><button  onClick={()=> ActiveStatus(row.id , row.isActive )}>{row.isActive ? 'Active' : 'InActive'}</button></TableCell>
+                    <TableCell align={'center'}  ><Button  onClick={()=> ActiveStatus(row.id , row.isActive )} variant="contained" color={row.isActive?'success':'error'}   >{row.isActive ? 'Active' : 'Inactive'}</Button></TableCell>
                   </TableRow>
                 );
               })}
