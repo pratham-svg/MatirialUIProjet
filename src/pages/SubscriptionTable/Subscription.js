@@ -99,10 +99,17 @@ const debouncedSearch = useDebounce(search, 1000);
 
 const [startDate, setStartDate] = useState(null);
 const [endDate, setEndDate] = useState(null);
+const [isFetch,setIsFetch] = useState(false)
 const onChange = (dates) => {
   const [start, end] = dates;
   setStartDate(start);
-  setEndDate(end); // Debounce the search query with a delay of 500ms
+  setEndDate(end);
+  if(start && end){
+      setIsFetch(true)
+  }else{
+     setIsFetch(false)
+  }
+// Debounce the search query with a delay of 500ms
 }
 
 const handleSearchQueryChange = (event) => {
@@ -168,7 +175,15 @@ const fetchUserList = async (searchQuery) => {
 
   useEffect(() => {
     fetchUserList(debouncedSearch);
-  }, [page, rowsPerPage, debouncedSearch,startDate,endDate ])
+  }, [page, rowsPerPage, debouncedSearch]);
+
+
+
+  useEffect(() => {
+       if(isFetch){
+        fetchUserList()
+       }
+  },[isFetch])
 
 
 
@@ -215,14 +230,6 @@ if(loading){
       id="outlined-basic"
        variant="outlined"
        label="Select Date"
-      
-       
-       
-       
-
-
-      
-    
     />}
       onChange={onChange}
       startDate={startDate}
@@ -230,13 +237,8 @@ if(loading){
       showIcon
       selectsRange
       autoComplete="off"
-      
-      
-      
-    
-      
-      // inline
-    />
+       />
+
       </Box>
         </Box>
    
