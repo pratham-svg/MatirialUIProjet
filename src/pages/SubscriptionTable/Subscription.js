@@ -97,7 +97,7 @@ const [count,setCount]  = React.useState(0)
 const [search, setSearch] = useState('');
 const debouncedSearch = useDebounce(search, 1000);
 
-const [startDate, setStartDate] = useState(new Date());
+const [startDate, setStartDate] = useState(null);
 const [endDate, setEndDate] = useState(null);
 const onChange = (dates) => {
   const [start, end] = dates;
@@ -214,17 +214,24 @@ if(loading){
      
       id="outlined-basic"
        variant="outlined"
+       label="Select Date"
+      
+       
+       
+       
 
 
       
     
     />}
-      selected={startDate}
       onChange={onChange}
       startDate={startDate}
       endDate={endDate}
       showIcon
       selectsRange
+      autoComplete="off"
+      
+      
       
     
       
