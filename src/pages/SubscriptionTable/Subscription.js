@@ -30,12 +30,12 @@ import "../SubscriptionTable/Sub.css";
 
 const columns = [
 
-  {  label: 'Name', minWidth: 170 },
+  {  label: 'Name', minWidth: 150 },
 
   {
     id: 'email',
     label: 'Email',
-    minWidth: 170,
+    minWidth: 150,
     align: 'center',
     format: (value) => value.toLocaleString('en-US'),
   },
@@ -44,21 +44,21 @@ const columns = [
     {
       id: 'amount',
       label: 'Amount',
-      minWidth: 170,
+      minWidth: 150,
       align: 'center',
       format: (value) => value.toLocaleString('en-US'),
     },
     {
       id: 'isYearly',
       label: 'IsYearly',
-      minWidth: 170,
+      minWidth: 120,
       align: 'center',
       format: (value) => value.toLocaleString('en-US'),
     },
     {
       id: 'subscriptionDate',
       label: 'Subscription Date',
-      minWidth: 170,
+      minWidth: 150,
       align: 'center',
       format: (value) => value.toLocaleString('en-US'),
     },
@@ -66,7 +66,7 @@ const columns = [
     {
         id: 'expiryDate',
         label: 'Expiry Date',
-        minWidth: 170,
+        minWidth: 150,
         align: 'center',
         format: (value) => value.toLocaleString('en-US')  ,
     }
@@ -104,11 +104,13 @@ const onChange = (dates) => {
   const [start, end] = dates;
   setStartDate(start);
   setEndDate(end);
-  if(start && end){
-      setIsFetch(true)
-  }else{
-     setIsFetch(false)
-  }
+    if(start && end){
+        setIsFetch(true)
+    }else{
+       setIsFetch(false)
+    }
+  
+ 
 // Debounce the search query with a delay of 500ms
 }
 
@@ -142,12 +144,12 @@ const fetchUserList = async (searchQuery) => {
             },
             {
               key: 'startDate',
-              value: startDate?? "",
+              value: startDate ?? "",
               operator: 'string'
             },
             {
               key: 'endDate',
-              value: endDate ?? "",
+              value:  endDate ?addtractOneDay(endDate):  "",
               operator: 'string'
             }
             
@@ -176,6 +178,19 @@ const fetchUserList = async (searchQuery) => {
   useEffect(() => {
     fetchUserList(debouncedSearch);
   }, [page, rowsPerPage, debouncedSearch]);
+
+
+  // function subtractOneDay(date) {
+  //   const newDate = new Date(date);
+  //   newDate.setDate(newDate.getDate() - 1);
+  //   return newDate;
+  // }
+
+  function addtractOneDay(date) {
+    const newDate = new Date(date);
+    newDate.setDate(newDate.getDate() + 1);
+    return newDate;
+  }
 
 
 
@@ -229,7 +244,7 @@ if(loading){
      
       id="outlined-basic"
        variant="outlined"
-       label="Select Date"
+       label="Select Subscription Date"
     />}
       onChange={onChange}
       startDate={startDate}
@@ -237,6 +252,7 @@ if(loading){
       showIcon
       selectsRange
       autoComplete="off"
+      
        />
 
       </Box>
