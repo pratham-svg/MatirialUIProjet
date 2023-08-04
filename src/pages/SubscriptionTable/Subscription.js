@@ -89,26 +89,56 @@ const columns = [
   };
 
 function Subscription() {
-    const [page, setPage] = React.useState(0);
+const [page, setPage] = React.useState(0);
 const [rowsPerPage, setRowsPerPage] = React.useState(10);
 const [ subscriptionList , setSubscriptionList ] = React.useState([]);
 const [loading,setLoading] = React.useState(false)
 const [count,setCount]  = React.useState(0)
 const [search, setSearch] = useState('');
+const [filter,setFilter] = useState([])
 const debouncedSearch = useDebounce(search, 1000);
 
 const [startDate, setStartDate] = useState(null);
 const [endDate, setEndDate] = useState(null);
-const [isFetch,setIsFetch] = useState(false)
+// const [isFetch,setIsFetch] = useState(false)
+
+
 const onChange = (dates) => {
   const [start, end] = dates;
   setStartDate(start);
   setEndDate(end);
-    if(start && end){
-        setIsFetch(true)
-    }else{
-       setIsFetch(false)
+  let dateRangeFilter = [];
+  if(start && end){
+    dateRangeFilter = [
+      {
+        "key":"startDate",
+        "value": start,
+      },
+      {
+        "key":"endDate",
+        "value":addtractOneDay(end),
+      }
+    ]
+    setFilter([...filter,...dateRangeFilter])
+  }else{
+    if(!start && !end){
+      setFilter((prev)=> {
+        const copy = [...prev];
+        copy.map((i) => {
+            if(i.key == "startDate" || i.key  == "endDate"){
+               i.value = ""
+            }
+        })
+        return copy
+     })
     }
+   
+  }
+    // if(start && end){
+    //     setIsFetch(true)
+    // }else{
+    //    setIsFetch(false)
+    // }
   
  
 // Debounce the search query with a delay of 500ms
@@ -126,7 +156,7 @@ const formatUserName =(user) => {
 
 // const Navigate = useNavigate()
 
-const fetchUserList = async (searchQuery) => {
+const fetchUserList = async (search) => {
     try {
       setLoading(true);
       const response = await axios.post(
@@ -136,24 +166,25 @@ const fetchUserList = async (searchQuery) => {
           perPage: rowsPerPage,
           sortBy: 'createdAt',
           direction: 'desc',
-          whereClause: [
-            {
-              key: 'all',
-              value: searchQuery,
-              operator: 'string'
-            },
-            {
-              key: 'startDate',
-              value: startDate ?? "",
-              operator: 'string'
-            },
-            {
-              key: 'endDate',
-              value:  endDate ?addtractOneDay(endDate):  "",
-              operator: 'string'
-            }
+          // whereClause: [
+          //   {
+          //     key: 'all',
+          //     value: searchQuery,
+          //     operator: 'string'
+          //   },
+          //   {
+          //     key: 'startDate',
+          //     value: startDate ?? "",
+          //     operator: 'string'
+          //   },
+          //   {
+          //     key: 'endDate',
+          //     value:  endDate ?addtractOneDay(endDate):  "",
+          //     operator: 'string'
+          //   }
             
-          ]
+          // ]
+          whereClause:[...filter,{"key":"all","value":search}]
         },
         
         { headers: { 'authorization': `bearer ${localStorage.getItem("token")}` } }
@@ -177,14 +208,12 @@ const fetchUserList = async (searchQuery) => {
 
   useEffect(() => {
     fetchUserList(debouncedSearch);
-  }, [page, rowsPerPage, debouncedSearch]);
+  }, [page, rowsPerPage, debouncedSearch,filter]);
 
 
-  // function subtractOneDay(date) {
-  //   const newDate = new Date(date);
-  //   newDate.setDate(newDate.getDate() - 1);
-  //   return newDate;
-  // }
+
+
+
 
   function addtractOneDay(date) {
     const newDate = new Date(date);
@@ -194,11 +223,11 @@ const fetchUserList = async (searchQuery) => {
 
 
 
-  useEffect(() => {
-       if(isFetch){
-        fetchUserList()
-       }
-  },[isFetch])
+  // useEffect(() => {
+  //      if(isFetch){
+  //       fetchUserList()
+  //      }
+  // },[isFetch])
 
 
 

@@ -10,7 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import axios from '../../../node_modules/axios/index';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import { useNavigate } from '../../../node_modules/react-router-dom/dist/index';
+// import { useNavigate } from '../../../node_modules/react-router-dom/dist/index';
 import Swal from 'sweetalert2';
 import { useAuth } from 'AuthContext/AuthContext';
 
@@ -40,6 +40,13 @@ const columns = [
     format: (value) => value.toLocaleString('en-US')
   },
   {
+    id: 'usertype',
+    label: 'Payment Status',
+    minWidth: 170,
+    align: 'center',
+    format: (value) => value.toLocaleString('en-US')
+  },
+  {
     id: 'isActive',
     label: 'Status',
     minWidth: 170,
@@ -53,43 +60,15 @@ const Pagiantion = () => {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [UserData, SetUserData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
-  const [status, setStatus] = React.useState('Active');
+  const [status, setStatus] = React.useState("");
+  const [payment, setPayment] = React.useState("");
+
   const [count,setCount]  = React.useState(0)
  
 
   const { user } = useAuth();
   const isLoggedIn = !!user;
-  const Navigate = useNavigate();
-
-  const FillterFormData =async (data)=>{
-    
-    setStatus(data)
-    let Fillter =     {
-      "key": "isActive",
-        "value": data,
-        "operator": "string"
-      }
-    setLoading(true);
-    let UserList = await axios.post(
-      'https://machanicalcalculator.microlent.com/api/user/pagination',
-      {
-        curPage: page + 1,
-        perPage: rowsPerPage,
-        sortBy: 'createdAt',
-        direction: 'desc',
-        whereClause: [
-          Fillter
-        ]
-      },
-      {
-        headers: { authorization: `bearer ${localStorage.getItem('token')}` }
-      }
-    );
-
-    await SetUserData(UserList?.data?.data);
-    setCount(UserList?.data?.count)
-    setLoading(false);
-  }
+  // const Navigate = useNavigate();
 
   const ActiveStatus= async(id , status )=>{
     try{
@@ -106,7 +85,7 @@ const Pagiantion = () => {
           text: 'Status Updated Successfully'
         });
       }
-      await setuserList()
+      await getUserList()
       
       setLoading(false)
      return 
@@ -126,7 +105,7 @@ const Pagiantion = () => {
   }
   
 
-  const setuserList = async () => {
+  const getUserList = async () => {
     try {
       setLoading(true);
       let UserList = await axios.post(
@@ -138,8 +117,13 @@ const Pagiantion = () => {
           direction: 'desc',
           whereClause: [
             {
-              key: 'string',
-              value: 'string',
+              key: 'isActive',
+              value: status,
+              operator: 'string'
+            },
+            {
+              key: 'usertype',
+              value: payment,
               operator: 'string'
             }
           ]
@@ -159,7 +143,6 @@ const Pagiantion = () => {
         text: 'Something went wrong!'
       });
       setLoading(false);
-      Navigate('/login');
     }
   };
 
@@ -169,8 +152,8 @@ const Pagiantion = () => {
       // Redirect to the login page
       window.location.href = '/admin/login'; // Replace '/login' with the actual login page path
     }
-    setuserList();
-  }, [isLoggedIn, page, rowsPerPage]);
+    getUserList();
+  }, [isLoggedIn, page, rowsPerPage,status,payment]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -192,6 +175,20 @@ const Pagiantion = () => {
   return (
     <>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end',marginBottom: 2 }}>
+      <FormControl sx={{ width: '150px',mr:2 }} fullWidth>
+          <InputLabel id="demo-simple-select-label">Payment Status</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={payment} 
+            label="Payment Status"
+            required
+            onChange={(e) => setPayment(e.target.value)}
+          >
+            <MenuItem value="paid">Paid</MenuItem>
+            <MenuItem value="unpaid">Unpaid</MenuItem>
+          </Select>
+        </FormControl>
         <FormControl sx={{ width: '150px' }} fullWidth>
           <InputLabel id="demo-simple-select-label">Status</InputLabel>
           <Select
@@ -200,10 +197,10 @@ const Pagiantion = () => {
             value={status} 
             label="Status"
             required
-            onChange={(e) => FillterFormData(e.target.value)}
+            onChange={(e) => setStatus(e.target.value)}
           >
-            <MenuItem value={true}>Active</MenuItem>
-            <MenuItem value={false}>InActive</MenuItem>
+            <MenuItem value={"true"}>Active</MenuItem>
+            <MenuItem value={"false"}>Inactive</MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -226,6 +223,8 @@ const Pagiantion = () => {
                     <TableCell align={'start'}>{row.firstName}</TableCell>
                     <TableCell align={'center'}>{row.email}</TableCell>
                     <TableCell align={'center'}>{row.mobileNo}</TableCell>
+                    <TableCell align={'center'}>{row.usertype == "paid"? "Paid":"Unpaid"}</TableCell>
+
                     <TableCell align={'center'}  ><Button  onClick={()=> ActiveStatus(row.id , row.isActive )} variant="contained" color={row.isActive?'success':'error'}   >{row.isActive ? 'Active' : 'Inactive'}</Button></TableCell>
                   </TableRow>
                 );
