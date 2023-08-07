@@ -292,7 +292,7 @@ if(loading){
   {subscriptionList.length>0?(
   <>
        
-    <TableContainer sx={{ maxHeight: 440 }}>
+    <TableContainer >
       <Table stickyHeader aria-label="sticky table">
         <TableHead>
         <TableRow>
