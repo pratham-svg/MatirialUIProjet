@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 
 const validationSchema = Yup.object().shape({
   packageName: Yup.string().required('Title is required').min(2, 'Title must be at least 2 characters').max(20,"maximum 20 characters").trim(),
-  amount: Yup.number().required('Amount is required').positive('Please enter a valid positive number'),
+  amount: Yup.number().required('Amount is required').min(0, 'Please enter a valid number greater than or equal to 0'),
   duration: Yup.string().required('Duration is required'),
   description: Yup.string().required('Description is required').min(2,'Description must be at least 2 characters').max(225,"maximum 225 characters").trim(),
   features:Yup.array(Yup.string().required("features is required").min(2,'features must be at least 2 characters').max(40,"maximum 40 characters").trim())
