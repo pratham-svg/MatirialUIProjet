@@ -9,20 +9,20 @@ import TableRow from '@mui/material/TableRow';
 import axios from '../../../node_modules/axios/index';
 import CircularProgress from '@mui/material/CircularProgress';
  import Box from '@mui/material/Box';
- import DeleteIcon from '@mui/icons-material/Delete';
- import EditIcon from '@mui/icons-material/Edit';
- import { TextField } from '../../../node_modules/@mui/material/index';
+//  import DeleteIcon from '@mui/icons-material/Delete';
+//  import EditIcon from '@mui/icons-material/Edit';
+// import { TextField } from '../../../node_modules/@mui/material/index';
  
- import {  Button } from '@mui/material';
+//  import {  Button } from '@mui/material';
 
-import React  , {useEffect,useState}   from 'react';
+import React  , {useEffect}   from 'react';
 
 
 
 
 import Swal from 'sweetalert2';
-import { API_URL } from 'Services/Service';
-import { useNavigate } from '../../../node_modules/react-router-dom/dist/index';
+// import { API_URL } from 'Services/Service';
+// import { useNavigate } from '../../../node_modules/react-router-dom/dist/index';
 import WithAuth from 'components/WithAuth';
 
 const columns = [
@@ -41,45 +41,53 @@ const columns = [
     align: 'center',
     format: (value) => value.toLocaleString('en-US'),
   },
+  // {
+  //   id: 'duration',
+  //   label: 'Duration',
+  //   minWidth: 170,
+  //   align: 'center',
+  //   format: (value) => value.toLocaleString('en-US'),
+  // },
   {
-    id: 'duration',
-    label: 'Duration',
-    minWidth: 170,
-    align: 'center',
-    format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'amount',
-    label: 'Amount',
-    minWidth: 170,
-    align: 'center',
-    format: (value) => value.toFixed(2),
-  },
-  {
-    id: ' ',
-    label: 'Action',
+    id: 'monthly',
+    label: 'Monthly',
     minWidth: 170,
     align: 'center',
     format: (value) => value.toFixed(2),
   },
+
+  {
+    id: 'yearly',
+    label: 'Yearly',
+    minWidth: 170,
+    align: 'center',
+    format: (value) => value.toFixed(2),
+  },
+  // {
+  //   id: ' ',
+  //   label: 'Action',
+  //   minWidth: 170,
+  //   align: 'center',
+  //   format: (value) => value.toFixed(2),
+  // },
 ];
 
 
-const useDebounce = (value, delay) => {
-  const [debouncedValue, setDebouncedValue] = useState(value);
+// const useDebounce = (value, delay) => {
+//   const [debouncedValue, setDebouncedValue] = useState(value);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
+//   useEffect(() => {
+//     const timer = setTimeout(() => {
+//       setDebouncedValue(value);
+//     }, delay);
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [value, delay]);
+//     return () => {
+//       clearTimeout(timer);
+//     };
+//   }, [value, delay]);
 
-  return debouncedValue;
-};
+//   return debouncedValue;
+// };
 
 
 
@@ -90,9 +98,9 @@ function SubscriptionList() {
     const [ subscriptionList , setSubscriptionList ] = React.useState([]);
     const [loading,setLoading] = React.useState(false);
     const [count,setCount]=React.useState(0);
-    const [search, setSearch] = useState('');
-     const debouncedSearch = useDebounce(search, 1000)
-     const navigate= useNavigate()
+    // const [search, setSearch] = useState('');
+    //  const debouncedSearch = useDebounce(search, 1000)
+    //  const navigate= useNavigate()
 
 
 
@@ -102,9 +110,9 @@ function SubscriptionList() {
     // const Navigate = useNavigate()
     
     
-  const handleSearchQueryChange = (event) => {
-    setSearch(event.target.value);
-  };
+  // const handleSearchQueryChange = (event) => {
+  //   setSearch(event.target.value);
+  // };
     const fetchUserList = async (searchQuery) => {
         try {
           setLoading(true);
@@ -146,8 +154,8 @@ function SubscriptionList() {
       useEffect(() => {
         // Check if the user is not logged in
         
-        fetchUserList(debouncedSearch);
-      }, [page, rowsPerPage, debouncedSearch ])
+        fetchUserList();
+      }, [page, rowsPerPage])
     
     const handleChangePage = (event, newPage) => {
       setPage(newPage);
@@ -158,42 +166,42 @@ function SubscriptionList() {
       setPage(0);
     };
     
-    const handleClick =()=>{
-      window.location.href = '/admin/createSubscription';
+    // const handleClick =()=>{
+    //   window.location.href = '/admin/createSubscription';
 
-    }
-    const deleteSubscription = async (id)=>{
-      try{
-       setLoading(true);
+    // }
+    // const deleteSubscription = async (id)=>{
+    //   try{
+    //    setLoading(true);
        
-       let data = await axios.get(`${API_URL}/subscription/delete/${id}`,
-       { headers: { 'authorization': `bearer ${localStorage.getItem("token")}` } })
-       let resposne = data.data
-       if(resposne.statusCode == 200){
-        fetchUserList();
-         Swal.fire(
-           'success',
-           'Subscription Deleted Successfully',
-           'success'
-         )
-       }
-       setLoading(false);
-      } catch(err){
+    //    let data = await axios.get(`${API_URL}/subscription/delete/${id}`,
+    //    { headers: { 'authorization': `bearer ${localStorage.getItem("token")}` } })
+    //    let resposne = data.data
+    //    if(resposne.statusCode == 200){
+    //     fetchUserList();
+    //      Swal.fire(
+    //        'success',
+    //        'Subscription Deleted Successfully',
+    //        'success'
+    //      )
+    //    }
+    //    setLoading(false);
+    //   } catch(err){
        
-       Swal.fire(
-         'error',
-         'something went wrong',
-         'error'
-       )
-      }
-     }
+    //    Swal.fire(
+    //      'error',
+    //      'something went wrong',
+    //      'error'
+    //    )
+    //   }
+    //  }
 
-    const updateSubsciption= async (id)=> {
+    // const updateSubsciption= async (id)=> {
      
-      navigate("/updateSubscription/" + id)
+    //   navigate("/updateSubscription/" + id)
      
     
-    }
+    // }
 
 
     
@@ -210,7 +218,7 @@ function SubscriptionList() {
 
       return (
       <>
-      <stack  spacing={2} direction="row" style={{marginBottom: 15,display:"flex",justifyContent: 'space-between' }} >
+      {/* <stack  spacing={2} direction="row" style={{marginBottom: 15,display:"flex",justifyContent: 'flex-end' }} >
         <Button variant="contained" onClick={handleClick} >Create subscription</Button>
         <Box sx={{ }}>
         <TextField
@@ -223,7 +231,7 @@ function SubscriptionList() {
         </Box>
 
 
-      </stack>
+      </stack> */}
     
      <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       {subscriptionList.length>0?(<>
@@ -253,18 +261,22 @@ function SubscriptionList() {
                                         <TableCell  align={"center"}>
                            {row.packageName}
                            </TableCell>
-                      <TableCell  align={"center"}>
+                      {/* <TableCell  align={"center"}>
                            {row.duration? row.duration:" null "}
-                           </TableCell>
-                      <TableCell  align={"center"}>
-                           {row.amount}
-                           </TableCell>
-
-
+                           </TableCell> */}
                            <TableCell  align={"center"}>
+                           {row.monthly}
+                           </TableCell>
+
+                      <TableCell  align={"center"}>
+                           {row.yearly}
+                           </TableCell>
+
+
+                           {/* <TableCell  align={"center"}>
                             <Button onClick={() => updateSubsciption(row.id)}   ><EditIcon/></Button>    
                             <Button  onClick={()=>{deleteSubscription(row.id)}} ><DeleteIcon/></Button>    
-                            </TableCell>
+                            </TableCell> */}
 
                     </TableRow>
                   );
