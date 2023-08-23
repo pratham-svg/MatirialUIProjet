@@ -265,11 +265,11 @@ function SubscriptionList() {
                            {row.duration? row.duration:" null "}
                            </TableCell> */}
                            <TableCell  align={"center"}>
-                           {row.monthly}
+                           {row.monthly == 0?" Not Exist":row.monthly}
                            </TableCell>
 
                       <TableCell  align={"center"}>
-                           {row.yearly}
+                           {row.yearly == 0 ? "Not Exist " : row.yearly }
                            </TableCell>
 
 
